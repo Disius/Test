@@ -2,11 +2,15 @@
 
 import {computed} from "vue";
 
-const img = computed(() => {
-
-})
+const bgimage = {
+    backgroundImage:'url(http://test.test/storage/img/1200px-Tec-Tuxtla_Logo.svg.png)',
+    backgroundSize: 'cover'
+}
 
 </script>
 <template>
-    <img src="" alt="">
+    <div class="w-24 h-24 rounded-full mx-auto"
+         :style="bgimage">
+
+    </div>
 </template>

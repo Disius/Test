@@ -1,5 +1,6 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
+import {ref} from "vue";
 
 defineProps({
     canLogin: {
@@ -17,37 +18,53 @@ defineProps({
         required: true,
     },
 });
+
+const nameCards = ref([
+    { flex: 5, name: "Departamento de Desarrollo Académico", user_rol: 1, route: "/login"},
+    { flex: 5, name: "Coordinación de Formación docente y Actualización profesional", user_rol: 2, route: "/login",},
+    { flex: 5, name: "Jefes Academicos", user_rol: 3, route: "/login" },
+    { flex: 5, name: "Docentes", user_rol: 4, route: "/login" },
+]);
 </script>
 
 <template>
     <Head title="Welcome" />
 
+
+
     <div
-        class="relative sm:flex sm:justify-center"
+        class="relative sm:flex sm:justify-center mt-8"
     >
-        <div v-if="canLogin" class="sm:fixed sm:top-0 sm:right-0 p-6 text-right">
-            <Link
-                v-if="$page.props.auth.user"
-                :href="route('dashboard')"
-                class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                >Dashboard</Link
+        <v-row justify="center" class="mt-12">
+            <v-col
+                v-for="card in nameCards"
+                :key="card.name"
+                :cols="card.flex"
+                class="d-flex justify-center align-center md"
             >
-
-            <template v-else>
-                <Link
-                    :href="route('login')"
-                    class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                    >Log in</Link
-                >
-
-                <Link
-                    v-if="canRegister"
-                    :href="route('register')"
-                    class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                    >Register</Link
-                >
-            </template>
-        </div>
+                <Link :href="card.route"
+                      as="card"
+                      type="card"
+                      :data="{ role: card.user_rol }">
+                    <v-hover>
+                        <template v-slot:default="{ isHovering, props }">
+                            <v-card
+                                v-bind="props"
+                                :color="isHovering ? 'light-blue-darken-4' : undefined"
+                                height="250"
+                                width="600"
+                                class="d-flex justify-center align-center"
+                                link
+                                type="card"
+                                elevation="10"
+                            >
+                                <span class="text-h6 text-center">{{card.name}}</span>
+                            </v-card>
+                        </template>
+                    </v-hover>
+                </Link>
+            </v-col>
+        </v-row>
 
 
     </div>
