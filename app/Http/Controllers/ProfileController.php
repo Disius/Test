@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Carrera;
+use App\Models\Departamento;
+use App\Models\Docente;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -18,9 +22,28 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): Response
     {
+        $carrera = Carrera::select('nameCarrera', 'id')->get();
+        $departamento = Departamento::select('nameDepartamento', 'id')->get();
+        $tipoPlaza = DB::table('tipo_plaza')->select('id', 'nombre')->get();
+        $puesto = DB::table('puesto')->select('id', 'nombre')->get();
+
+        $auth = Auth::user()->docente_id;
+
+        $docente = Docente::where('docente.id', $auth)
+            ->join('carreras', 'carreras.id', '=', 'docente.carrera_id')
+            ->join('tipo_plaza', 'tipo_plaza.id', '=', 'docente.tipo_plaza')
+            ->join('puesto', 'puesto.id', '=', 'docente.id_puesto')
+            ->join('departamento', 'departamento.id', '=', 'docente.departamento_id')
+            ->select('docente.*', 'tipo_plaza.nombre AS namePlaza', 'carreras.nameCarrera', 'puesto.nombre AS namePuesto', 'departamento.nameDepartamento')
+            ->first();
         return Inertia::render('Profile/Edit', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),
+            'docente' => $docente,
+            'carrera' => $carrera,
+            'departamento' => $departamento,
+            'tipo_plaza' => $tipoPlaza,
+            'puesto' => $puesto
         ]);
     }
 

@@ -32,6 +32,7 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
 
+
     Route::get('/detecciones', [CoursesController::class, 'index'])->name('detecciones.index');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
