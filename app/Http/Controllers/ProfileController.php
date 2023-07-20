@@ -6,6 +6,7 @@ use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Carrera;
 use App\Models\Departamento;
 use App\Models\Docente;
+use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -82,5 +83,36 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function DocenteProfileCreate(Request $request){
+
+
+
+            $docente = Docente::create([
+                'rfc' => $request->rfc,
+                'curp' => $request->curp,
+                'nombre' => $request->nombre,
+                'apellidoPat' => $request->apellidoPat,
+                'apellidoMat' => $request->apellidoMat,
+                'sexo' => $request->sexo,
+                'telefono' => $request->telefono,
+                'carrera_id' => $request->carrera_id,
+                'id_puesto' => $request->id_puesto,
+                'tipo_plaza' => $request->tipo_plaza,
+                'departamento_id' => $request->departamento_id,
+                'user_id' => $request->id,
+            ]);
+
+            $docente->save();
+
+
+            User::where('id', $request->id)->update([
+                'docente_id' => $docente->id,
+            ]);
+
+            return Redirect::route('profile.edit');
+
+
     }
 }

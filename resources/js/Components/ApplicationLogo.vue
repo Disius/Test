@@ -9,7 +9,7 @@ const bgimage = {
 
 </script>
 <template>
-    <div class="w-24 h-24 rounded-full mx-auto"
+    <div class="rounded-full mx-auto"
          :style="bgimage">
 
     </div>

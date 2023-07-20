@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Docente;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
@@ -33,6 +34,9 @@ class HandleInertiaRequests extends Middleware
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $request->user(),
+            ],
+            'docente' => [
+                'info' => Docente::where('id', $request->user()->docente_id)->first('nombre')
             ],
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy)->toArray(), [
