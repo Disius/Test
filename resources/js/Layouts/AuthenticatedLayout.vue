@@ -8,7 +8,8 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import {Link, usePage} from '@inertiajs/vue3';
 
 const showingNavigationDropdown = ref(false);
-const docente = computed(() => usePage().props.docente.info)
+const docente = computed(() => usePage().props.info[0]);
+const user = computed(() => usePage().props.auth.user);
 </script>
 
 <template>
@@ -33,9 +34,11 @@ const docente = computed(() => usePage().props.docente.info)
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </NavLink>
-                                <NavLink :href="route('detecciones.index')" :active="route().current('detecciones.index')">
-                                    Detecciones
-                                </NavLink>
+                                <template v-if="user.role === 3">
+                                    <NavLink :href="route('detecciones.index')" :active="route().current('detecciones.index')">
+                                        Detecciones
+                                    </NavLink>
+                                </template>
                             </div>
                         </div>
 
@@ -49,7 +52,9 @@ const docente = computed(() => usePage().props.docente.info)
                                                 type="button"
                                                 class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
                                             >
-                                                {{  }}
+                                                <template v-if="docente[0] != null">
+                                                    {{ docente[0].nombre }}
+                                                </template>
 
                                                 <svg
                                                     class="ml-2 -mr-0.5 h-4 w-4"
