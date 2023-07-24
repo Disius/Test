@@ -28,7 +28,7 @@ class CoursesController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Views/academicos/Create.Detecciones');
     }
 
     /**

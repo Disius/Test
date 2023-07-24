@@ -32,18 +32,23 @@ const form = useForm({
 });
 
 onMounted(() => {
-    form.departamento_id = user.value.departamento_id
-    form.nombre = props.docente.nombre
-    form.apellidoPat = props.docente.apellidoPat
-    form.apellidoMat = props.docente.apellidoMat
-    form.curp = props.docente.curp
-    form.rfc = props.docente.rfc
-    form.telefono = props.docente.telefono
-    form.carrera_id = props.docente.carrera_id
-    form.sexo = props.docente.sexo
-    form.departamento_id = props.docente.departamento_id
-    form.id_puesto = props.docente.id_puesto
-    form.tipo_plaza = props.docente.tipo_plaza
+    if (!props.docente){
+        return form
+    }else {
+        form.departamento_id = user.value.departamento_id
+        form.nombre = props.docente.nombre
+        form.apellidoPat = props.docente.apellidoPat
+        form.apellidoMat = props.docente.apellidoMat
+        form.curp = props.docente.curp
+        form.rfc = props.docente.rfc
+        form.telefono = props.docente.telefono
+        form.carrera_id = props.docente.carrera_id
+        form.sexo = props.docente.sexo
+        form.departamento_id = props.docente.departamento_id
+        form.id_puesto = props.docente.id_puesto
+        form.tipo_plaza = props.docente.tipo_plaza
+    }
+
 
 })
 const sex = [{value: 1, text: "M"}, {value: 2, text: "F"}]
