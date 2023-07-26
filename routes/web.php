@@ -24,7 +24,7 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-});
+})->name('main');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -41,3 +41,5 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 require __DIR__.'/AcademicsRoutes.php';
+
+require __DIR__.'/DesarrolloRoutes.php';

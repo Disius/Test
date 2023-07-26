@@ -3,6 +3,7 @@
 import {ref} from "vue";
 import {useForm} from "@inertiajs/vue3";
 import InputLabel from "@/Components/InputLabel.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
 
 const props = defineProps({
 
@@ -54,35 +55,34 @@ const period = ref([
 
 <template>
     <section>
-        <v-dialog v-model="dialog" width="500" persistent>
-            <v-card width="500" height="300">
-                <v-card-title class="text-center">Tipo de diagnostico que desea realizar</v-card-title>
-                <v-divider></v-divider>
-                <v-card-text>
-                    <v-container class="mt-6">
-                        <InputLabel for="tipo_solicitud" value="Tipo de solicitud" />
-                        <v-row align="center" justify="center" class="mt-2">
-                            <v-select :items="tipoSolicitud" item-title="text" item-value="value"
-                                      v-model="form.tipo">
+        <form @submit.prevent="">
+            <v-dialog v-model="dialog" width="500" persistent="true">
+                <v-card width="500" height="300">
+                    <v-card-title class="text-center">Tipo de diagnostico que desea realizar</v-card-title>
+                    <v-divider></v-divider>
+                    <v-card-text>
+                        <v-container class="mt-6">
+                            <InputLabel for="tipo_solicitud" value="Tipo de solicitud" />
+                            <v-row align="center" justify="center" class="mt-2">
+                                <v-select :items="tipoSolicitud" item-title="text" item-value="value"
+                                          v-model="form.tipo">
 
-                            </v-select>
-                        </v-row>
-                    </v-container>
-                </v-card-text>
-                <v-divider></v-divider>
-                <v-card-actions>
-                    <v-row justify="end" class="">
-                        <v-col cols="4" align-self="center">
-                            <v-btn prepend-icon="mdi-check-circle" color="green" size="" @click="dialog = false">
-                                Aceptar
-                            </v-btn>
-                        </v-col>
-                    </v-row>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
+                                </v-select>
+                            </v-row>
+                        </v-container>
+                    </v-card-text>
+                    <v-divider></v-divider>
+                        <div class="flex items-center mr-5 mb-7 justify-end gap-4">
+                            <PrimaryButton @click="dialog = false" :disabled="form.processing">Confirmar</PrimaryButton>
 
-        <v-row justify="center">
+                            <Transition enter-from-class="opacity-0" leave-to-class="opacity-0" class="transition ease-in-out">
+                                <p v-if="form.recentlySuccessful" class="text-sm text-gray-600">Confirmado.</p>
+                            </Transition>
+                        </div>
+                </v-card>
+            </v-dialog>
+
+            <v-row justify="center">
                 <template v-if="form.tipo != null">
                     <v-container class="mt-5">
                         <v-row justify="center">
@@ -146,23 +146,28 @@ const period = ref([
 
                                 </v-text-field>
                             </v-col>
-                            <v-col cols="6">
-                                <v-select label="Periodo de realización (enero-junio o agosto-diciembre)" v-model="form.periodo" :items="period" item-title="text" item-value="value">
+                            <v-col cols="6" align-self="center">
+                                <InputLabel for="periodo" value="Periodo de realización (enero-junio o agosto-diciembre)"  />
+                                <v-select v-model="form.periodo"
+                                          :items="period" item-title="text" item-value="value">
 
                                 </v-select>
                             </v-col>
                             <v-col cols="6">
-                                <v-select label="Modalidad" :items="modalidad" item-title="text" item-value="value" v-model="form.modalidad" >
+                                <InputLabel for="periodo" value="Modalidad"  />
+                                <v-select :items="modalidad" item-title="text" item-value="value" v-model="form.modalidad" >
 
                                 </v-select>
                             </v-col>
                             <v-col cols="6">
-                                <v-select label="Tipo de curso" :items="tipoCurso" item-title="text" item-value="value" v-model="form.tipo_act" >
+                                <InputLabel for="tipo_curso" value="Tipo de curso"  />
+                                <v-select :items="tipoCurso" item-title="text" item-value="value" v-model="form.tipo_act" >
 
                                 </v-select>
                             </v-col>
                             <v-col cols="12">
-                                <v-select label="Carrera a la que va dirigida" :items="carreraFilter" item-title="nameCarrera" item-value="id" v-model="form.dirigido">
+                                <InputLabel for="carrera" value="Carrera a la que va dirigida" class="sr-only" />
+                                <v-select :items="carreraFilter" item-title="nameCarrera" item-value="id" v-model="form.dirigido">
 
                                 </v-select>
                             </v-col>
@@ -233,7 +238,15 @@ const period = ref([
                         </v-row>
                     </v-container>
                 </template>
-        </v-row>
+            </v-row>
+            <div class="flex justify-end mr-12 h-6 items-center gap-4">
+                <PrimaryButton :disabled="form.processing">Guardar</PrimaryButton>
+
+                <Transition enter-from-class="opacity-0" leave-to-class="opacity-0" class="transition ease-in-out">
+                    <p v-if="form.recentlySuccessful" class="text-sm text-gray-600">Guardado.</p>
+                </Transition>
+            </div>
+        </form>
     </section>
 </template>
 

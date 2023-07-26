@@ -3,6 +3,17 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import DeteccionesForm from "@/Pages/Views/academicos/forms/DeteccionesForm.vue";
 import {ref} from "vue";
 
+const props = defineProps({
+    base_docente: {
+        type: Array,
+    },
+    carrera_filtro: {
+        type: Array
+    },
+    todos_los_departamentos: {
+        type: Array
+    }
+})
 // const dialog = ref(true);
 </script>
 

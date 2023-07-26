@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Carrera;
+use App\Models\Departamento;
 use App\Models\DeteccionNecesidades;
+use App\Models\Docente;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -28,7 +31,14 @@ class CoursesController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Views/academicos/Create.Detecciones');
+        $docentes = Docente::select('nombre_completo', 'id')->get();
+        $carrera = Carrera::where('departamento_id', auth()->user()->departamento_id)->select('nameCarrera', 'id', 'departamento_id')->get();
+        $departamento = Departamento::all();
+        return Inertia::render('Views/academicos/Create.Detecciones', [
+            'base_docente' => $docentes,
+            'carrera_filtro' => $carrera,
+            'todos_los_departamentos' => $departamento
+        ]);
     }
 
     /**

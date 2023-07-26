@@ -34,6 +34,11 @@ const user = computed(() => usePage().props.auth.user);
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </NavLink>
+                                <template v-if="user.role === 1">
+                                    <NavLink :href="route('parametros.edit')" :active="route().current('parametros.edit')">
+                                        Gestión de departamentos y carreras
+                                    </NavLink>
+                                </template>
                                 <template v-if="user.role === 3">
                                     <NavLink :href="route('detecciones.index')" :active="route().current('detecciones.index')">
                                         Detecciones
