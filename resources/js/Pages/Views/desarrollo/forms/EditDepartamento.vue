@@ -16,18 +16,14 @@
                                     <InputLabel for="jefe_id" value="Jefe del departamento"/>
                                     <v-autocomplete v-model="form.jefe_id" :items="props.docente" item-title="nombre" item-value="id"></v-autocomplete>
                                 </v-col>
-                                <v-col cols="12">
-                                    <InputLabel for="carrera" value="Carrera(s) adscrita(s)"/>
-                                    <v-select multiple v-model="form.carrera_id" :items="props.carrera" item-value="id" item-title="nameCarrera"></v-select>
-                                </v-col>
                             </v-row>
                         </v-container>
                         <v-divider></v-divider>
-                            <v-row class="justify-end">
-                                <v-col cols="2">
-                                    <PrimaryButton>Guardar</PrimaryButton>
-                                </v-col>
-                            </v-row>
+                        <v-row class="justify-end">
+                            <v-col cols="2">
+                                <PrimaryButton>Guardar</PrimaryButton>
+                            </v-col>
+                        </v-row>
                 </form>
             </div>
         </div>
@@ -43,7 +39,6 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 
 
 const form = useForm({
-    carrera_id: null,
     nameDepartamento: "",
     jefe_id: null
 })
@@ -64,7 +59,6 @@ onMounted(() => {
         return form;
     }else{
             form.nameDepartamento = props.departamento.nameDepartamento
-            form.carrera_id = props.departamento.carrera_id
             form.jefe_id = props.departamento.jefe_id
     }
 })

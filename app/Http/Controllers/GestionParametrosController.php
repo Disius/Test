@@ -110,7 +110,6 @@ class   GestionParametrosController extends Controller
 
         $departamento->nameDepartamento = $request->nameDepartamento;
         $departamento->jefe_id = $request->jefe_id;
-        $departamento->carrera_id = $request->carrera_id;
 
         $departamento->save();
 

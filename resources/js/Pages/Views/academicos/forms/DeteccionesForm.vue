@@ -1,13 +1,23 @@
 <script setup>
 
-import {ref} from "vue";
-import {useForm} from "@inertiajs/vue3";
+import {computed, ref} from "vue";
+import {useForm, usePage} from "@inertiajs/vue3";
 import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 
 const props = defineProps({
-
+    carrera: {
+        type: Array,
+    },
+    docente: {
+        type: Array
+    },
+    todos_los_departamentos: {
+        type: Array,
+    }
 });
+
+const user = computed(() => usePage().props.auth.user);
 let exist = ref(null)
 const dialog = ref(true);
 const form = useForm({
@@ -26,7 +36,7 @@ const form = useForm({
     tipo_act: null,
     dirigido: null,
     modalidad: null,
-    id_jefe: null,
+    id_jefe: user.value.id,
     facilitador_externo: ""
 });
 
@@ -51,12 +61,20 @@ const period = ref([
     {text: "AGOSTO-DICIEMBRE", value: 2},
 ]);
 
+const carreraFilter = computed(() => {
+    let filtro = props.carrera
+    const addTodas =  {nameCarrera: "TODAS LAS CARRERAS", id: 11}
+
+    filtro.push(addTodas);
+
+    return filtro;
+});
 </script>
 
 <template>
     <section>
-        <form @submit.prevent="">
-            <v-dialog v-model="dialog" width="500" persistent="true">
+        <form @submit.prevent="form.post(route('store.detecciones'))">
+            <v-dialog v-model="dialog" width="500" persistent>
                 <v-card width="500" height="300">
                     <v-card-title class="text-center">Tipo de diagnostico que desea realizar</v-card-title>
                     <v-divider></v-divider>
@@ -92,11 +110,6 @@ const period = ref([
 
                                     </v-text-field>
                                 </v-col>
-                                <!--                                <v-col cols="6">-->
-                                <!--                                    <v-text-field label="Competencia(s) en la(s) que se requiere la Formación Docente">-->
-
-                                <!--                                    </v-text-field>-->
-                                <!--                                </v-col>-->
                                 <v-col cols="6">
                                     <v-textarea label="Competencia(s) en la(s) que se requiere la Formación Docente" v-model="form.ContenidoTFA" >
 
@@ -109,36 +122,12 @@ const period = ref([
 
                                     </v-text-field>
                                 </v-col>
-                                <!--                                <v-col cols="6">-->
-                                <!--                                    <v-text-field label="Contenidos temáticos en que se requiere Actualización Profesional">-->
-
-                                <!--                                    </v-text-field>-->
-                                <!--                                </v-col>-->
                                 <v-col cols="6">
                                     <v-textarea label="Contenidos temáticos en que se requiere Actualización Profesional" v-model="form.ContenidoTFA" >
 
                                     </v-textarea>
                                 </v-col>
                             </template>
-                            <!--                            <v-row justify="start" class="ml-3">-->
-                            <!--                                <v-tooltip-->
-                            <!--                                    location="right"-->
-                            <!--                                >-->
-                            <!--                                    <template v-slot:activator="{ props }">-->
-                            <!--                                        <v-btn-->
-                            <!--                                            icon-->
-                            <!--                                            v-bind="props"-->
-                            <!--                                            size="x-large"-->
-                            <!--                                            @click=""-->
-                            <!--                                        >-->
-                            <!--                                            <v-icon color="blue-lighten-1">-->
-                            <!--                                                mdi-help-->
-                            <!--                                            </v-icon>-->
-                            <!--                                        </v-btn>-->
-                            <!--                                    </template>-->
-                            <!--                                    <span>Si las competencias o contenidos son en lista y llevan por favor usar el campo de texto grande</span>-->
-                            <!--                                </v-tooltip>-->
-                            <!--                            </v-row>-->
                         </v-row>
                         <v-row justify="center">
                             <v-col cols="6">
@@ -166,13 +155,13 @@ const period = ref([
                                 </v-select>
                             </v-col>
                             <v-col cols="12">
-                                <InputLabel for="carrera" value="Carrera a la que va dirigida" class="sr-only" />
+                                <InputLabel for="carrera" value="Carrera a la que va dirigida" />
                                 <v-select :items="carreraFilter" item-title="nameCarrera" item-value="id" v-model="form.dirigido">
 
                                 </v-select>
                             </v-col>
                             <v-col >
-                                <v-autocomplete label="Facilitadores">
+                                <v-autocomplete multiple label="Facilitadores" :items="props.docente" item-title="nombre" item-value="id" v-model="form.facilitadores">
 
                                 </v-autocomplete>
                             </v-col>
@@ -199,7 +188,7 @@ const period = ref([
                                 <v-text-field label="Faciltador" :disabled="!exist" v-model="form.facilitador_externo"></v-text-field>
                             </v-col>
                             <v-col cols="12">
-                                <v-text-field label="Nombre del curso, taller, conferencias, etc." v-model="form.nombreCT" :rules="textRules">
+                                <v-text-field label="Nombre del curso, taller, conferencias, etc." v-model="form.nombreCT">
 
                                 </v-text-field>
                             </v-col>

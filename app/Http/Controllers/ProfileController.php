@@ -87,8 +87,6 @@ class ProfileController extends Controller
 
     public function DocenteProfileCreate(Request $request){
 
-
-
             $docente = Docente::create([
                 'rfc' => $request->rfc,
                 'curp' => $request->curp,
@@ -114,5 +112,26 @@ class ProfileController extends Controller
             return Redirect::route('profile.edit');
 
 
+    }
+
+    public function update_docente(Request $request, $id){
+        $docente = Docente::find($id);
+
+        $docente->rfc = $request->rfc;
+        $docente->curp = $request->curp;
+        $docente->nombre = $request->nombre;
+        $docente->apellidoPat = $request->apellidoPat;
+        $docente->apellidoMat = $request->apellidoMat;
+        $docente->sexo = $request->sexo;
+        $docente->telefono = $request->telefono;
+        $docente->carrera_id = $request->carrera_id;
+        $docente->id_puesto = $request->id_puesto;
+        $docente->tipo_plaza = $request->tipo_plaza;
+        $docente->departamento_id = $request->departamento_id;
+        $docente->user_id = $request->user_id;
+
+        $docente->save();
+
+        return Redirect::route('profile.edit');
     }
 }

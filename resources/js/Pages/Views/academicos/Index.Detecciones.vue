@@ -18,9 +18,14 @@ const props = defineProps({
 
         <v-container>
             <v-row justify="end">
-                <v-col cols="4">
+                <v-col cols="2">
                     <NavLink :href="route('detecciones.create')" :active="route().current('detecciones.create')">
                         <PrimaryButton>CREAR DETECCION DE NECESIDADES</PrimaryButton>
+                    </NavLink>
+                </v-col>
+                <v-col cols="3">
+                    <NavLink :href="route('index.registros')" :active="route().current('index.registros')">
+                        <PrimaryButton>Todos los registros</PrimaryButton>
                     </NavLink>
                 </v-col>
             </v-row>

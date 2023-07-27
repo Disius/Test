@@ -30,6 +30,17 @@ const form = useForm({
     tipo_plaza: null,
     departamento_id: null,
 });
+const sex = [{value: 1, text: "M"}, {value: 2, text: "F"}];
+
+
+function submit(){
+    if (!props.docente){
+        form.post(route('docente.create'))
+    }else{
+        form.put(route('update.docente', props.docente.id))
+    }
+}
+
 
 onMounted(() => {
     if (!props.docente){
@@ -50,8 +61,7 @@ onMounted(() => {
     }
 
 
-})
-const sex = [{value: 1, text: "M"}, {value: 2, text: "F"}]
+});
 </script>
 
 <template>
@@ -63,7 +73,7 @@ const sex = [{value: 1, text: "M"}, {value: 2, text: "F"}]
                 Actualizar tu información personal
             </p>
         </header>
-        <form class="mt-6 space-y-6" @submit.prevent="form.post(route('docente.create'))">
+        <form class="mt-6 space-y-6" @submit.prevent="submit">
             <div>
                 <InputLabel for="nombre" value="Nombre" />
 

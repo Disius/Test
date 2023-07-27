@@ -8,7 +8,6 @@
         <tr>
             <th>Departamento</th>
             <th>Jefe del departamento</th>
-            <th>Carrera(s) adscrita(s)</th>
             <th></th>
         </tr>
         </thead>
@@ -22,7 +21,6 @@
             <td>
                 {{c.jefe_id}}
             </td>
-            <td>{{c.carrera_id}}</td>
             <td>
                 <div class="flex justify-end  h-6 items-center gap-4">
                     <NavLink :href="route('edit.departamento', c.id)">
