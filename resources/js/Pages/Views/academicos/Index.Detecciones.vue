@@ -96,6 +96,13 @@ const props = defineProps({
                                 </v-alert>
                             </template>
                         </td>
+                        <td>
+                            <NavLink :href="route('show.detecciones', deteccion.id)">
+                                <v-btn prepend-icon="mdi-pencil" color="blue">
+                                    Ver
+                                </v-btn>
+                            </NavLink>
+                        </td>
                     </tr>
                     </tbody>
                 </v-table>

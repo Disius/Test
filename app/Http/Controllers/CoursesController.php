@@ -18,7 +18,7 @@ class CoursesController extends Controller
     {
 
         $detecciones = DeteccionNecesidades::with(['carrera', 'deteccion_facilitador'])
-            ->where('aceptado', '=', 0)->where('id_jefe', auth()->user()->docente_id)->orderBy('id', 'desc')->get();
+            ->where('id_jefe', auth()->user()->docente_id)->orderBy('id', 'desc')->get();
 
 
         return Inertia::render('Views/academicos/Index.Detecciones',[
@@ -100,7 +100,10 @@ class CoursesController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $deteccion = DeteccionNecesidades::with(['carrera', 'deteccion_facilitador'])->where('id', $id)->first();
+        return Inertia::render('Views/academicos/Show.Detecciones', [
+            'deteccion' => $deteccion
+        ]);
     }
 
     /**
