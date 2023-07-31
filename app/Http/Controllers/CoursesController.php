@@ -7,6 +7,7 @@ use App\Models\Departamento;
 use App\Models\DeteccionNecesidades;
 use App\Models\Docente;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class CoursesController extends Controller
@@ -80,6 +81,7 @@ class CoursesController extends Controller
             'carrera_dirigido' => $request->dirigido,
             'id_jefe' => $request->id_jefe,
             'aceptado' => 0,
+            'obs' => 0,
             'modalidad' => $request->modalidad,
             'facilitador_externo' =>  $request->facilitador_externo
         ]);
@@ -101,8 +103,9 @@ class CoursesController extends Controller
     public function show(string $id)
     {
         $deteccion = DeteccionNecesidades::with(['carrera', 'deteccion_facilitador'])->where('id', $id)->first();
+
         return Inertia::render('Views/academicos/Show.Detecciones', [
-            'deteccion' => $deteccion
+            'deteccion' => $deteccion,
         ]);
     }
 
@@ -111,7 +114,14 @@ class CoursesController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $deteccion = DeteccionNecesidades::with(['carrera', 'deteccion_facilitador'])->where('id', $id)->first();
+        $carrera = Carrera::where('departamento_id', auth()->user()->departamento_id)->select('nameCarrera', 'id', 'departamento_id')->get();
+        $docente = Docente::select('id', 'nombre')->get();
+        return Inertia::render('Views/academicos/Edit.Detecciones', [
+            'deteccion' => $deteccion,
+            'carrera' => $carrera,
+            'docentes' => $docente
+        ]);
     }
 
     /**
@@ -119,7 +129,28 @@ class CoursesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $deteccion = DeteccionNecesidades::find($id);
+
+        $deteccion->asignaturaFA = $request->AsignaturasFA;
+        $deteccion->contenidosTM = $request->ContenidoTFA;
+        $deteccion->numeroProfesores = $request->Numprofesores;
+        $deteccion->periodo = $request->periodo;
+        $deteccion->nombreCurso = $request->nombreCT;
+        $deteccion->fecha_I = $request->fecha_I;
+        $deteccion->fecha_F = $request->fecha_F;
+        $deteccion->hora_I = $request->hora_I;
+        $deteccion->hora_F = $request->hora_F;
+        $deteccion->tipo_FDoAP = $request->tipo;
+        $deteccion->tipo_actividad = $request->tipo_act;
+        $deteccion->objetivoEvento = $request->objetivo;
+        $deteccion->carrera_dirigido = $request->dirigido;
+        $deteccion->id_jefe = $request->id_jefe;
+        $deteccion->modalidad = $request->modalidad;
+        $deteccion->deteccion_facilitador()->sync($request->input('facilitadores', []));
+
+        $deteccion->save();
+
+        return Redirect::route('detecciones.index');
     }
 
     /**

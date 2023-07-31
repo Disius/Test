@@ -32,5 +32,7 @@ Route::middleware(['auth', 'role:Jefe del Departamento de Desarrollo Academico|C
     Route::put('/departamento/actualizado/{id}', [GestionParametrosController::class, 'update_departamento'])->name('update.departamento');
 
 
-
+    Route::middleware('role:Coordinacion de FD y AP')->group(function (){
+        Route::get('/detecciones', []);
+    });
 });

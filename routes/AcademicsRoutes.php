@@ -21,6 +21,8 @@ Route::middleware(['auth', 'role:Jefes Academicos'])->group(function(){
     Route::get('/detecciones/create', [CoursesController::class, 'create'])->name('detecciones.create');
     Route::post('/deteccion/guardado', [CoursesController::class, 'store'])->name('store.detecciones');
     Route::get('/deteccion/{id}', [CoursesController::class, 'show'])->name('show.detecciones');
+    Route::get('/deteccion/editar/{id}', [CoursesController::class, 'edit'])->name('edit.detecciones');
+    Route::put('/deteccion/actualizado/{id}', [CoursesController::class, 'update'])->name('update.detecciones');
     Route::get('/registros', [CoursesController::class, 'registros'])->name('index.registros');
 
 });

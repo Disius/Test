@@ -52,9 +52,6 @@ const props = defineProps({
                         <th class="text-left">
                             Objetivo de la actividad o evento
                         </th>
-                        <th class="text-left">
-                            Observaciones
-                        </th>
                         <th class="text-left">Estado</th>
                         <th class="text-left">
                             Ver
@@ -77,7 +74,6 @@ const props = defineProps({
                             <td class="v-card--hover">AGOSTO-DICIEMBRE</td>
                         </template>
                         <td class="v-card--hover">{{deteccion.objetivoEvento}}</td>
-                        <td>{{ deteccion.observaciones }}</td>
                         <td class="ma-4 pa-4">
                             <!-- <Estado :estadoDeteccion="props.detecciones"/> -->
                             <template v-if="deteccion.obs === 1">
@@ -97,9 +93,9 @@ const props = defineProps({
                             </template>
                         </td>
                         <td>
-                            <NavLink :href="route('show.detecciones', deteccion.id)">
-                                <v-btn prepend-icon="mdi-pencil" color="blue">
-                                    Ver
+                            <NavLink :href="route('show.detecciones', deteccion.id)" type="button" as="button">
+                                <v-btn icon color="blue">
+                                    <v-icon>mdi-eye-arrow-right-outline</v-icon>
                                 </v-btn>
                             </NavLink>
                         </td>

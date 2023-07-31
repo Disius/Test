@@ -1,13 +1,26 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import DeteccionesForm from "@/Pages/Views/academicos/forms/DeteccionesForm.vue";
-import {ref} from "vue";
+import {ref, computed} from "vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import NavLink from "@/Components/NavLink.vue";
 
 const props = defineProps({
     deteccion: {
         type: Object
     }
+});
+
+
+const formatFechaF = computed(() => {
+    return new Date(props.deteccion.fecha_F).toLocaleDateString('es-MX');
 })
+// Computed propierties
+
+
+const formatFechaI = computed(() => {
+    return new Date(props.deteccion.fecha_I).toLocaleDateString('es-MX');
+});
 // const dialog = ref(true);
 </script>
 
@@ -15,6 +28,14 @@ const props = defineProps({
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{props.deteccion.nombreCurso}}</h2>
+
+            <div class="mt-6">
+                <NavLink :href="route('edit.detecciones', props.deteccion.id)" type="button" as="button">
+                    <v-btn prepend-icon="mdi-pencil" class="" color="blue-darken-1">
+                        Editar
+                    </v-btn>
+                </NavLink>
+            </div>
         </template>
 
         <div class="pt-5">
@@ -34,7 +55,7 @@ const props = defineProps({
                                     <span>{{props.deteccion.contenidosTM}}</span>
                                 </div>
                                 <div class="flow-root ... pt-7">
-                                    <strong>Número de profesores(as) que la requieren:</strong>
+                                    <strong>Número de profesores(as) que la requieren: </strong>
                                     <span>{{props.deteccion.numeroProfesores}}</span>
                                 </div>
                                 <div class="flow-root ... pt-5">
@@ -102,6 +123,26 @@ const props = defineProps({
                                         <span>ACTUALIZACIÓN PROFESIONAL</span>
                                     </template>
                                 </div>
+                                <div class="flow-root ... pt-5">
+                                    <strong>Fechas en las que se realizara la actividad o evento: </strong>
+                                    <span>Del {{formatFechaI}} al {{formatFechaF}}</span>
+                                </div>
+                                <div class="flow-root ... pt-5">
+                                    <strong>Horarios en las que se realizara la actividad o evento: </strong>
+                                    <span>De {{props.deteccion.hora_I}} a {{props.deteccion.hora_F}}</span>
+                                </div>
+                                <div class="flow-root ... pt-5">
+                                    <strong>Objetivo de la actividad o evento: </strong>
+                                    <v-divider></v-divider>
+                                    <span>{{props.deteccion.objetivoEvento}}</span>
+                                </div>
+                                <template v-if="props.deteccion.obs === 1">
+                                    <div class="flow-root ... pt-5">
+                                        <strong>Observaciones: </strong>
+                                        <v-divider></v-divider>
+                                        <span>{{props.deteccion.observaciones}}</span>
+                                    </div>
+                                </template>
                             </div>
                         </div>
                     </div>
@@ -112,5 +153,7 @@ const props = defineProps({
 </template>
 
 <style scoped>
-
+span{
+    font-size: large;
+}
 </style>

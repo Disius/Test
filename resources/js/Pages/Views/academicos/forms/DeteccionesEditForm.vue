@@ -1,20 +1,13 @@
 <script setup>
-
-import {computed, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import {useForm, usePage} from "@inertiajs/vue3";
 import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 
 const props = defineProps({
-    carrera: {
-        type: Array,
-    },
-    docente: {
-        type: Array
-    },
-    todos_los_departamentos: {
-        type: Array,
-    }
+    deteccion: Object,
+    carrera: Array,
+    docentes: Array
 });
 
 const user = computed(() => usePage().props.auth.user);
@@ -69,39 +62,43 @@ const carreraFilter = computed(() => {
 
     return filtro;
 });
+/* Este computed sirve para solo obtener el id, el objeto se obtiene a partir de la relacion que existe en los modelos
+* no lo aplique en los modelos que devuelve el id porque lo uso en otras vistas, si hayas la forma de obtenerlo
+* exelente!!!
+* */
+const idFacilitador = computed(() => {
+   let facilitador = null
+
+    for (let i of props.deteccion.deteccion_facilitador){
+        facilitador = i.id
+    }
+    return facilitador
+});
+onMounted(() => {
+    form.AsignaturasFA = props.deteccion.asignaturaFA
+    form.ContenidoTFA = props.deteccion.contenidosTM
+    form.Numprofesores = props.deteccion.numeroProfesores
+    form.periodo = props.deteccion.periodo
+    form.nombreCT = props.deteccion.nombreCurso
+    form.fecha_I = props.deteccion.fecha_I
+    form.fecha_F = props.deteccion.fecha_F
+    form.hora_I = props.deteccion.hora_I
+    form.hora_F =props.deteccion.hora_F
+    form.tipo = props.deteccion.tipo_FDoAP
+    form.tipo_act = props.deteccion.tipo_actividad
+    form.dirigido = props.deteccion.carrera_dirigido
+    form.objetivo = props.deteccion.objetivoEvento
+    form.modalidad = props.deteccion.modalidad
+    form.facilitador_externo = props.deteccion.facilitador_externo
+    // !!!!
+    form.facilitadores = idFacilitador.value
+});
 </script>
 
 <template>
     <section>
-        <form @submit.prevent="form.post(route('store.detecciones'))">
-            <v-dialog v-model="dialog" width="500" persistent>
-                <v-card width="500" height="300">
-                    <v-card-title class="text-center">Tipo de diagnostico que desea realizar</v-card-title>
-                    <v-divider></v-divider>
-                    <v-card-text>
-                        <v-container class="mt-6">
-                            <InputLabel for="tipo_solicitud" value="Tipo de solicitud" />
-                            <v-row align="center" justify="center" class="mt-2">
-                                <v-select :items="tipoSolicitud" item-title="text" item-value="value"
-                                          v-model="form.tipo">
-
-                                </v-select>
-                            </v-row>
-                        </v-container>
-                    </v-card-text>
-                    <v-divider></v-divider>
-                        <div class="flex items-center mr-5 mb-7 justify-end gap-4">
-                            <PrimaryButton @click="dialog = false" :disabled="form.processing">Confirmar</PrimaryButton>
-
-                            <Transition enter-from-class="opacity-0" leave-to-class="opacity-0" class="transition ease-in-out">
-                                <p v-if="form.recentlySuccessful" class="text-sm text-gray-600">Confirmado.</p>
-                            </Transition>
-                        </div>
-                </v-card>
-            </v-dialog>
-
+        <form @submit.prevent="form.put(route('update.detecciones', props.deteccion.id))">
             <v-row justify="center">
-                <template v-if="form.tipo != null">
                     <v-container class="mt-5">
                         <v-row justify="center">
                             <template v-if="form.tipo === 1">
@@ -130,8 +127,18 @@ const carreraFilter = computed(() => {
                             </template>
                         </v-row>
                         <v-row justify="center">
+                            <v-col class="" cols="6">
+                                <InputLabel for="tipo_solicitud" value="Tipo de solicitud" />
+                                <v-row align="center" justify="center" class="mt-2">
+                                    <v-select :items="tipoSolicitud" item-title="text" item-value="value"
+                                              v-model="form.tipo">
+
+                                    </v-select>
+                                </v-row>
+                            </v-col>
                             <v-col cols="6">
-                                <v-text-field label="Número de profesores(as)" v-model="form.Numprofesores" >
+                                <InputLabel for="num_profesores" value="Numero de profesores(as) requeridos(as)"></InputLabel>
+                                <v-text-field v-model="form.Numprofesores" >
 
                                 </v-text-field>
                             </v-col>
@@ -161,7 +168,7 @@ const carreraFilter = computed(() => {
                                 </v-select>
                             </v-col>
                             <v-col >
-                                <v-autocomplete multiple label="Facilitadores" :items="props.docente" item-title="nombre" item-value="id" v-model="form.facilitadores">
+                                <v-autocomplete multiple label="Facilitadores" :items="props.docentes" item-title="nombre" item-value="id" v-model="form.facilitadores">
 
                                 </v-autocomplete>
                             </v-col>
@@ -226,7 +233,6 @@ const carreraFilter = computed(() => {
                             </v-col>
                         </v-row>
                     </v-container>
-                </template>
             </v-row>
             <div class="flex justify-end mr-12 h-6 items-center gap-4">
                 <PrimaryButton :disabled="form.processing">Guardar</PrimaryButton>
