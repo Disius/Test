@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CoordinacionController;
 use App\Http\Controllers\CoursesController;
 use App\Http\Controllers\GestionParametrosController;
 use App\Http\Controllers\ProfileController;
@@ -33,6 +34,6 @@ Route::middleware(['auth', 'role:Jefe del Departamento de Desarrollo Academico|C
 
 
     Route::middleware('role:Coordinacion de FD y AP')->group(function (){
-        Route::get('/detecciones', []);
+        Route::get('/detecciones', [CoordinacionController::class, 'index'])->name('index.detecciones');
     });
 });

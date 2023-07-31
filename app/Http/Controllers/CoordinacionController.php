@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DeteccionNecesidades;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class CoordinacionController extends Controller
 {
@@ -11,7 +13,11 @@ class CoordinacionController extends Controller
      */
     public function index()
     {
-        //
+        $detecciones = DeteccionNecesidades::with('carrera', 'deteccion_facilitador')->get();
+
+        return Inertia::render('Views/desarrollo/coordinacion/DeteccionCoordinacion', [
+            'detecciones' => $detecciones
+        ]);
     }
 
     /**
