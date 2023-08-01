@@ -41,7 +41,11 @@ class CoordinacionController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $deteccion = DeteccionNecesidades::with('carrera', 'deteccion_facilitador')->find($id);
+
+        return Inertia::render('Views/desarrollo/coordinacion/ShowDeteccionCoordinacion', [
+            'deteccion' => $deteccion
+        ]);
     }
 
     /**

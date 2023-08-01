@@ -35,5 +35,6 @@ Route::middleware(['auth', 'role:Jefe del Departamento de Desarrollo Academico|C
 
     Route::middleware('role:Coordinacion de FD y AP')->group(function (){
         Route::get('/detecciones', [CoordinacionController::class, 'index'])->name('index.detecciones');
+        Route::get('/detecciones/deteccion/{id}', [CoordinacionController::class, 'show'])->name('show.Cdetecciones');
     });
 });
