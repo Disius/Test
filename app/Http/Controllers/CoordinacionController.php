@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DeteccionNecesidades;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class CoordinacionController extends Controller
@@ -13,7 +14,9 @@ class CoordinacionController extends Controller
      */
     public function index()
     {
-        $detecciones = DeteccionNecesidades::with('carrera', 'deteccion_facilitador')->get();
+        $detecciones = DeteccionNecesidades::with('carrera', 'deteccion_facilitador')
+            ->where('aceptado', '=', 0)
+            ->get();
 
         return Inertia::render('Views/desarrollo/coordinacion/DeteccionCoordinacion', [
             'detecciones' => $detecciones
@@ -31,9 +34,20 @@ class CoordinacionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        //
+        $request->validate([
+            'aceptado' => ['required']
+        ]);
+
+
+        $detecciones = DeteccionNecesidades::find($id);
+
+        $detecciones->aceptado = $request->aceptado;
+
+        $detecciones->save();
+
+        return Redirect::route('index.detecciones');
     }
 
     /**
@@ -61,7 +75,16 @@ class CoordinacionController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'observaciones' => ['required']
+        ]);
+
+        DeteccionNecesidades::where('id', $id)->update([
+            'observaciones' => $request->observaciones,
+            'obs' => 1
+        ]);
+
+        return Redirect::route('index.detecciones');
     }
 
     /**

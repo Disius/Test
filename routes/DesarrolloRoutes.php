@@ -34,7 +34,10 @@ Route::middleware(['auth', 'role:Jefe del Departamento de Desarrollo Academico|C
 
 
     Route::middleware('role:Coordinacion de FD y AP')->group(function (){
-        Route::get('/detecciones', [CoordinacionController::class, 'index'])->name('index.detecciones');
-        Route::get('/detecciones/deteccion/{id}', [CoordinacionController::class, 'show'])->name('show.Cdetecciones');
+        Route::get('/coordinacion/detecciones', [CoordinacionController::class, 'index'])->name('index.detecciones');
+        Route::get('/coordinacion/detecciones/deteccion/{id}', [CoordinacionController::class, 'show'])->name('show.Cdetecciones');
+        Route::put('/coordinacion/detecciones/deteccion/observacion/{id}', [CoordinacionController::class, 'update'])->name('update.observaciones');
+        Route::post('/coordinacion/detecciones/aceptado/{id}', [CoordinacionController::class, 'store'])->name('store.aceptado');
+
     });
 });

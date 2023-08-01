@@ -1,17 +1,42 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import TablaDetecciones from "@/Pages/Views/desarrollo/tablas/TablaDetecciones.vue";
+import {computed} from "vue";
+import InputLabel from "@/Components/InputLabel.vue";
+import TextInput from "@/Components/TextInput.vue";
+import {useForm} from "@inertiajs/vue3";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
 
 const props = defineProps({
     deteccion: Object,
-})
+});
 
+const formatFechaF = computed(() => {
+    return new Date(props.deteccion.fecha_F).toLocaleDateString('es-MX');
+})
+// Computed propierties
+
+
+const formatFechaI = computed(() => {
+    return new Date(props.deteccion.fecha_I).toLocaleDateString('es-MX');
+});
+
+const form = useForm({
+    observaciones: "",
+});
+
+const formAceptado = useForm({
+    aceptado: 1,
+})
 </script>
 
 <template>
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{props.deteccion.nombreCurso}}</h2>
+            <form @submit.prevent="formAceptado.post(route('store.aceptado', props.deteccion.id))">
+                <PrimaryButton class="mt-5">Aceptar Deteccion de Necesidades</PrimaryButton>
+            </form>
         </template>
 
         <div class="py-12">
@@ -119,6 +144,21 @@ const props = defineProps({
                                         <span>{{props.deteccion.observaciones}}</span>
                                     </div>
                                 </template>
+                                <form @submit.prevent="form.put(route('update.observaciones', props.deteccion.id))">
+                                    <div class="flow-root ... pt-5">
+                                        <strong>Añadir Observaciones: </strong>
+                                            <!--                                <InputLabel for="observaciones" value="Añadir Observaciones" />-->
+                                            <TextInput
+                                                id="observaciones"
+                                                type="text"
+                                                class="mt-1 rounded w-full"
+                                                v-model="form.observaciones"
+                                                required
+                                            />
+                                            <PrimaryButton class="mt-4">Guardar.</PrimaryButton>
+
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
