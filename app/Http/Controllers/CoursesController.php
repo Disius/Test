@@ -168,4 +168,8 @@ class CoursesController extends Controller
             'detecciones' => $detecciones
         ]);
     }
+
+    public function index_cursos(){
+
+    }
 }

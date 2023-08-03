@@ -49,6 +49,11 @@ const user = computed(() => usePage().props.auth.user);
                                         Detecciones
                                     </NavLink>
                                 </template>
+                                <template v-if="user.role === 4">
+                                    <NavLink :href="route('index.detecciones')" :active="route().current('index.detecciones')">
+                                        Cursos
+                                    </NavLink>
+                                </template>
                             </div>
                         </div>
 
