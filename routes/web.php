@@ -44,3 +44,5 @@ require __DIR__.'/auth.php';
 require __DIR__.'/AcademicsRoutes.php';
 
 require __DIR__.'/DesarrolloRoutes.php';
+
+require __DIR__.'/DocentesRoutes.php';

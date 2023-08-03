@@ -50,7 +50,7 @@ const user = computed(() => usePage().props.auth.user);
                                     </NavLink>
                                 </template>
                                 <template v-if="user.role === 4">
-                                    <NavLink :href="route('index.detecciones')" :active="route().current('index.detecciones')">
+                                    <NavLink :href="route('index.cursos.docentes')" :active="route().current('index.cursos.docentes')">
                                         Cursos
                                     </NavLink>
                                 </template>

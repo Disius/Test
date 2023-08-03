@@ -18,9 +18,9 @@ class Docente extends Model
         return $this->belongsToMany(DeteccionNecesidades::class, 'deteccion_has_facilitadores', 'docente_id', 'deteccion_id');
     }
 
-//    public function docente_inscrito(){
-//        return $this->belongsToMany(Curso::class, 'inscripcion', 'docente_id', 'curso_id');
-//    }
+    public function inscrito(){
+        return $this->belongsToMany(DeteccionNecesidades::class, 'inscripcion', 'docente_id', 'curso_id');
+    }
 
     public function deteccion(){
         return $this->hasMany(DeteccionNecesidades::class, 'id_jefe', 'id');

@@ -62,4 +62,8 @@ class DeteccionNecesidades extends Model
         return $this->belongsTo(Docente::class, 'id_jefe');
     }
 
+    public function docente_inscrito(): BelongsTo
+    {
+        return $this->belongsTo(Docente::class, 'curso_id', 'docente_id');
+    }
 }
