@@ -2,6 +2,8 @@
 
 namespace App\Notifications;
 
+use App\Models\DeteccionNecesidades;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -14,9 +16,10 @@ class NewDeteccionNotification extends Notification
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct(DeteccionNecesidades $detecciones, User $user)
     {
-        //
+        $this->detecciones = $detecciones;
+        $this->user = $user;
     }
 
     /**
@@ -26,7 +29,7 @@ class NewDeteccionNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['database'];
     }
 
     /**
@@ -48,7 +51,8 @@ class NewDeteccionNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            //
+            'email' => $this->detecciones->jefe_academico->email,
+            'id' => $this->detecciones->id,
         ];
     }
 }

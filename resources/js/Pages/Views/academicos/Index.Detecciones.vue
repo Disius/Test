@@ -87,14 +87,14 @@ const props = defineProps({
                                             <p>Observaciones</p>
                                         </v-alert>
                                     </template>
-                                    <template v-else="deteccion.obs === 0">
+                                    <template v-else-if="deteccion.obs === 0">
                                         <v-alert
                                             type="info"
                                         >
                                             <p>Sin revisar</p>
                                         </v-alert>
                                     </template>
-                                    <template v-else="deteccion.aceptado === 1">
+                                    <template v-else-if="deteccion.aceptado === 1">
                                         <v-alert
                                             type="success"
                                         >

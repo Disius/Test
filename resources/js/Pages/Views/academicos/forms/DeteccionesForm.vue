@@ -161,7 +161,7 @@ const carreraFilter = computed(() => {
                                 </v-select>
                             </v-col>
                             <v-col >
-                                <v-autocomplete required multiple label="Facilitadores" :items="props.docente" item-title="nombre" item-value="id" v-model="form.facilitadores">
+                                <v-autocomplete multiple label="Facilitadores" :items="props.docente" item-title="nombre" item-value="id" v-model="form.facilitadores">
 
                                 </v-autocomplete>
                             </v-col>

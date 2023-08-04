@@ -6,6 +6,8 @@ use App\Models\Carrera;
 use App\Models\Departamento;
 use App\Models\DeteccionNecesidades;
 use App\Models\Docente;
+use App\Models\User;
+use App\Notifications\NewDeteccionNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -20,7 +22,9 @@ class CoursesController extends Controller
     {
 
         $detecciones = DeteccionNecesidades::with(['carrera', 'deteccion_facilitador'])
-            ->where('id_jefe', auth()->user()->docente_id)->orderBy('id', 'desc')->get();
+            ->where('id_jefe', auth()->user()->docente_id)
+            ->where('aceptado', '=', 0)
+            ->orderBy('id', 'desc')->get();
 
 
         return Inertia::render('Views/academicos/Index.Detecciones',[
@@ -91,9 +95,9 @@ class CoursesController extends Controller
 
         $deteccion->deteccion_facilitador()->sync($request->input('facilitadores', []));
 
-//        User::role(['Coordinacion de FD y AP'])->each(function(User $user) use ($deteccion){
-//            $user->notify(new CoordiNotifications($deteccion, $user));
-//        });
+        User::role(['Coordinacion de FD y AP'])->each(function(User $user) use ($deteccion){
+            $user->notify(new NewDeteccionNotification($deteccion, $user));
+        });
 
         return redirect()->route('detecciones.index');
     }
