@@ -29,13 +29,15 @@ const formatFechaI = computed(() => {
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{props.deteccion.nombreCurso}}</h2>
 
-            <div class="mt-6">
-                <NavLink :href="route('edit.detecciones', props.deteccion.id)" type="button" as="button">
-                    <v-btn prepend-icon="mdi-pencil" class="" color="blue-darken-1">
-                        Editar
-                    </v-btn>
-                </NavLink>
-            </div>
+            <template v-if="props.deteccion.aceptado === 0">
+                <div class="mt-6">
+                    <NavLink :href="route('edit.detecciones', props.deteccion.id)" type="button" as="button">
+                        <v-btn prepend-icon="mdi-pencil" class="" color="blue-darken-1">
+                            Editar
+                        </v-btn>
+                    </NavLink>
+                </div>
+            </template>
         </template>
 
         <div class="pt-5">

@@ -33,7 +33,7 @@ const props = defineProps({
 
 
         <div class="">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+            <div class=" mx-auto sm:px-6 lg:px-8 space-y-6">
                 <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                     <v-card elevation="0">
                         <v-table
@@ -87,11 +87,18 @@ const props = defineProps({
                                             <p>Observaciones</p>
                                         </v-alert>
                                     </template>
-                                    <template v-else>
+                                    <template v-else="deteccion.obs === 0">
                                         <v-alert
                                             type="info"
                                         >
                                             <p>Sin revisar</p>
+                                        </v-alert>
+                                    </template>
+                                    <template v-else="deteccion.aceptado === 1">
+                                        <v-alert
+                                            type="success"
+                                        >
+                                            <p>Aceptado</p>
                                         </v-alert>
                                     </template>
                                 </td>

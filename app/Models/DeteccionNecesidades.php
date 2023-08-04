@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class DeteccionNecesidades extends Model
@@ -23,7 +24,7 @@ class DeteccionNecesidades extends Model
     protected $fillable = [
         'asignaturaFA', 'contenidosTM', 'numeroProfesores', 'periodo',
         'nombreCurso', 'fecha_I', 'fecha_F', 'hora_I', 'hora_F', 'objetivoEvento', 'tipo_FDoAP', 'tipo_actividad',
-        'carrera_dirigido', 'observaciones', 'id_jefe', 'obs', 'aceptado', 'modalidad', 'facilitador_externo'
+        'carrera_dirigido', 'observaciones', 'id_jefe', 'obs', 'aceptado', 'modalidad', 'facilitador_externo', 'total_horas'
     ];
 
     /**
@@ -62,8 +63,8 @@ class DeteccionNecesidades extends Model
         return $this->belongsTo(Docente::class, 'id_jefe');
     }
 
-    public function docente_inscrito(): BelongsTo
+    public function docente_inscrito(): BelongsToMany
     {
-        return $this->belongsTo(Docente::class, 'curso_id', 'docente_id');
+        return $this->belongsToMany(Docente::class, 'inscripcion', 'curso_id', 'docente_id');
     }
 }

@@ -29,9 +29,7 @@ const formatFechaI = computed(() => {
     return date;
 });
 
-const form = useForm({
-    id_docente: props.user.user.docente_id,
-});
+
 
 
 </script>
@@ -51,9 +49,9 @@ const form = useForm({
                 </th>
                 <th class="text-left">Horario
                 </th>
-                <th class="text-left">No. de 
-                                horas 
-                                x 
+                <th class="text-left">No. de
+                                horas
+                                x
                                 Curso
                 </th>
                 <th class="text-left">
@@ -61,6 +59,9 @@ const form = useForm({
                 </th>
                 <th class="text-left">Dirigido a:</th>
                 <th class="text-left">Observaciones
+                </th>
+                <th class="text-left">Ver Inscritos
+
                 </th>
             </tr>
             </thead>
@@ -110,18 +111,16 @@ const form = useForm({
                     {{ curso.observaciones }}
                 </td>
                 <td class="v-card--hover">
+                    <NavLink :href="route('show.inscritos.academicos', curso.id)" type="button" as="button">
+                        <v-btn icon color="blue">
+                            <v-icon>mdi-eye-arrow-right-outline</v-icon>
+                        </v-btn>
+                    </NavLink>
+                </td>
 
-                </td>
-                <td class="v-card--hover">
-                    <form @submit.prevent="form.post(route('inscripcion.docente', curso.id))">
-                        <PrimaryButton>
-                            Inscribirme
-                        </PrimaryButton>
-                    </form>
-                </td>
             </tr>
         </tbody>
-    </v-table> 
+    </v-table>
 </template>
 
 <style scoped>

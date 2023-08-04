@@ -9,6 +9,7 @@ use App\Models\Docente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use PhpParser\Node\Stmt\Return_;
 
 class CoursesController extends Controller
 {
@@ -176,5 +177,27 @@ class CoursesController extends Controller
         return Inertia::render('Views/cursos/CursosDocentes', [
             'cursos' => $cursos
         ]);
+    }
+
+    public function index_cursos_academico(){
+        $cursos = DeteccionNecesidades::with(['carrera', 'deteccion_facilitador', 'docente_inscrito'])->where('aceptado', '=', 1)
+//            ->where('id_jefe', auth()->user()->docente_id)
+        ->get();
+        return Inertia::render('Views/cursos/academicos/CursosAcademicos', [
+            'cursos' => $cursos
+        ]);
+    }
+
+    public function index_curso_inscrito($id){
+        $curso = DeteccionNecesidades::with(['carrera', 'deteccion_facilitador', 'docente_inscrito'])->where('aceptado', '=', 1)
+            ->find($id);
+        return Inertia::render('Views/cursos/academicos/Show.Inscritos', [
+            'curso' => $curso
+        ]);
+    }
+    public function inscripcion_docente(Request $request, $id){
+        $deteccion = DeteccionNecesidades::find($id);
+        $deteccion->docente_inscrito()->sync($request->input('id_docente'));
+        return Redirect::route('index.cursos.docentes');
     }
 }

@@ -106,24 +106,24 @@ const carreraFilter = computed(() => {
                         <v-row justify="center">
                             <template v-if="form.tipo === 1">
                                 <v-col cols="12" align-self="center">
-                                    <v-text-field v-model="form.AsignaturasFA" label="Dimensión(es) en la(s) que se requiere Formación Docente">
+                                    <v-text-field required v-model="form.AsignaturasFA" label="Dimensión(es) en la(s) que se requiere Formación Docente">
 
                                     </v-text-field>
                                 </v-col>
                                 <v-col cols="6">
-                                    <v-textarea label="Competencia(s) en la(s) que se requiere la Formación Docente" v-model="form.ContenidoTFA" >
+                                    <v-textarea required label="Competencia(s) en la(s) que se requiere la Formación Docente" v-model="form.ContenidoTFA" >
 
                                     </v-textarea>
                                 </v-col>
                             </template>
                             <template v-if="form.tipo === 2">
                                 <v-col cols="12" align-self="center">
-                                    <v-text-field label="Asignatura(s) en la(s) que se requiere Actualización profesional" v-model="form.AsignaturasFA">
+                                    <v-text-field required label="Asignatura(s) en la(s) que se requiere Actualización profesional" v-model="form.AsignaturasFA">
 
                                     </v-text-field>
                                 </v-col>
                                 <v-col cols="6">
-                                    <v-textarea label="Contenidos temáticos en que se requiere Actualización Profesional" v-model="form.ContenidoTFA" >
+                                    <v-textarea required label="Contenidos temáticos en que se requiere Actualización Profesional" v-model="form.ContenidoTFA" >
 
                                     </v-textarea>
                                 </v-col>
@@ -131,37 +131,37 @@ const carreraFilter = computed(() => {
                         </v-row>
                         <v-row justify="center">
                             <v-col cols="6">
-                                <v-text-field label="Número de profesores(as)" v-model="form.Numprofesores" >
+                                <v-text-field required label="Número de profesores(as)" v-model="form.Numprofesores" >
 
                                 </v-text-field>
                             </v-col>
                             <v-col cols="6" align-self="center">
                                 <InputLabel for="periodo" value="Periodo de realización (enero-junio o agosto-diciembre)"  />
-                                <v-select v-model="form.periodo"
+                                <v-select required v-model="form.periodo"
                                           :items="period" item-title="text" item-value="value">
 
                                 </v-select>
                             </v-col>
                             <v-col cols="6">
                                 <InputLabel for="periodo" value="Modalidad"  />
-                                <v-select :items="modalidad" item-title="text" item-value="value" v-model="form.modalidad" >
+                                <v-select required :items="modalidad" item-title="text" item-value="value" v-model="form.modalidad" >
 
                                 </v-select>
                             </v-col>
                             <v-col cols="6">
                                 <InputLabel for="tipo_curso" value="Tipo de curso"  />
-                                <v-select :items="tipoCurso" item-title="text" item-value="value" v-model="form.tipo_act" >
+                                <v-select required :items="tipoCurso" item-title="text" item-value="value" v-model="form.tipo_act" >
 
                                 </v-select>
                             </v-col>
                             <v-col cols="12">
                                 <InputLabel for="carrera" value="Carrera a la que va dirigida" />
-                                <v-select :items="carreraFilter" item-title="nameCarrera" item-value="id" v-model="form.dirigido">
+                                <v-select required :items="carreraFilter" item-title="nameCarrera" item-value="id" v-model="form.dirigido">
 
                                 </v-select>
                             </v-col>
                             <v-col >
-                                <v-autocomplete multiple label="Facilitadores" :items="props.docente" item-title="nombre" item-value="id" v-model="form.facilitadores">
+                                <v-autocomplete required multiple label="Facilitadores" :items="props.docente" item-title="nombre" item-value="id" v-model="form.facilitadores">
 
                                 </v-autocomplete>
                             </v-col>
@@ -185,10 +185,10 @@ const carreraFilter = computed(() => {
                                 </v-tooltip>
                             </v-col>
                             <v-col  align-self="center">
-                                <v-text-field label="Faciltador" :disabled="!exist" v-model="form.facilitador_externo"></v-text-field>
+                                <v-text-field required label="Faciltador" :disabled="!exist" v-model="form.facilitador_externo"></v-text-field>
                             </v-col>
                             <v-col cols="12">
-                                <v-text-field label="Nombre del curso, taller, conferencias, etc." v-model="form.nombreCT">
+                                <v-text-field required label="Nombre del curso, taller, conferencias, etc." v-model="form.nombreCT">
 
                                 </v-text-field>
                             </v-col>
@@ -198,10 +198,10 @@ const carreraFilter = computed(() => {
                                     o evento</h4>
                                 <v-row justify="center">
                                     <v-col cols="6">
-                                        <v-text-field type="date" v-model="form.fecha_I"/>
+                                        <v-text-field required type="date" v-model="form.fecha_I"/>
                                     </v-col>
                                     <v-col cols="6">
-                                        <v-text-field type="date" v-model="form.fecha_F"/>
+                                        <v-text-field required type="date" v-model="form.fecha_F"/>
                                     </v-col>
                                 </v-row>
                             </v-col>
@@ -212,15 +212,15 @@ const carreraFilter = computed(() => {
                                     evento</h4>
                                 <v-row justify="center">
                                     <v-col cols="6">
-                                        <v-text-field type="time" v-model="form.hora_I"></v-text-field>
+                                        <v-text-field required type="time" v-model="form.hora_I"></v-text-field>
                                     </v-col>
                                     <v-col cols="6">
-                                        <v-text-field type="time" v-model="form.hora_F"/>
+                                        <v-text-field required type="time" v-model="form.hora_F"/>
                                     </v-col>
                                 </v-row>
                             </v-col>
                             <v-col align-self="center" cols="12">
-                                <v-text-field v-model="form.objetivo" label="Objetivo de la actividad o evento" >
+                                <v-text-field required v-model="form.objetivo" label="Objetivo de la actividad o evento" >
 
                                 </v-text-field>
                             </v-col>
