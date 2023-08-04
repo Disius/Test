@@ -171,7 +171,7 @@ class CoursesController extends Controller
     }
 
     public function index_cursos(){
-        $cursos = DeteccionNecesidades::with(['carrera', 'deteccion_facilitador'])->where('aceptado', '=', 1)
+        $cursos = DeteccionNecesidades::with(['carrera', 'deteccion_facilitador', 'docente_inscrito'])->where('aceptado', '=', 1)
 //            ->where('id_jefe', auth()->user()->docente_id)
         ->get();
         return Inertia::render('Views/cursos/CursosDocentes', [

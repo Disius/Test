@@ -2,6 +2,7 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import TablaCursoDocente from  "@/Pages/Views/cursos/tablas/TablaCursoDocente.vue"
 import {computed} from "vue";
+import {Head} from "@inertiajs/vue3";
 
 const props = defineProps({
     cursos: Array,
@@ -12,6 +13,7 @@ const props = defineProps({
 </script>
 
 <template>
+    <Head title="Cursos"/>
     <AuthenticatedLayout>
         <template #header>
             <h2 class="text-lg font-medium text-gray-900">Cursos</h2>

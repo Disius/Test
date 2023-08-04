@@ -3,8 +3,9 @@
 import NavLink from "@/Components/NavLink.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { useForm } from "@inertiajs/vue3";
-import {computed} from "vue";
+import {computed, ref} from "vue";
 
+const alert = ref(false);
 const props = defineProps({
     cursos: Array,
     user: Object
@@ -51,9 +52,9 @@ const form = useForm({
                 </th>
                 <th class="text-left">Horario
                 </th>
-                <th class="text-left">No. de 
-                                horas 
-                                x 
+                <th class="text-left">No. de
+                                horas
+                                x
                                 Curso
                 </th>
                 <th class="text-left">
@@ -113,15 +114,42 @@ const form = useForm({
 
                 </td>
                 <td class="v-card--hover">
-                    <form @submit.prevent="form.post(route('inscripcion.docente', curso.id))">
-                        <PrimaryButton>
-                            Inscribirme
-                        </PrimaryButton>
-                    </form>
+                    <div v-for="inscrito in curso.docente_inscrito">
+                         <template v-if="inscrito.id !== props.user.user.docente_id">
+                             <form @submit.prevent="form.post(route('inscripcion.docente', curso.id))">
+                                 <PrimaryButton>
+                                     Inscribirme
+                                 </PrimaryButton>
+                             </form>
+                         </template>
+                        <template v-else>
+                            <div>
+                                <v-alert
+                                    v-model="alert"
+                                    border="start"
+                                    variant="tonal"
+                                    closable
+                                    close-label="Close Alert"
+                                    color="deep-purple-accent-4"
+                                >
+                                  Para no participar en el curso debes comunicarte al jefe del departamento
+                                </v-alert>
+
+                                <div
+                                    v-if="!alert"
+                                    class="text-center"
+                                >
+                                    <v-btn @click="alert = true" size="small" prepend-icon="mdi-help ">
+                                        Te encuentras inscrito a este curso
+                                    </v-btn>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
                 </td>
             </tr>
         </tbody>
-    </v-table> 
+    </v-table>
 </template>
 
 <style scoped>
