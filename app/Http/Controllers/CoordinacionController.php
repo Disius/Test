@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\DeteccionNecesidades;
+use App\Models\User;
+use App\Notifications\ObservacionNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -79,10 +81,16 @@ class CoordinacionController extends Controller
             'observaciones' => ['required']
         ]);
 
-        DeteccionNecesidades::where('id', $id)->update([
+        $deteccion = DeteccionNecesidades::where('id', $id)->first();
+
+        $deteccion->update([
             'observaciones' => $request->observaciones,
             'obs' => 1
         ]);
+
+        User::role(['Jefes Academicos'])->each(function(User $user) use ($deteccion){
+            $user->notify(new ObservacionNotification($deteccion, $user));
+        });
 
         return Redirect::route('index.detecciones');
     }

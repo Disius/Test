@@ -7,6 +7,7 @@ use App\Models\Departamento;
 use App\Models\DeteccionNecesidades;
 use App\Models\Docente;
 use App\Models\User;
+use App\Notifications\DeteccionEditadaNotification;
 use App\Notifications\NewDeteccionNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -154,6 +155,10 @@ class CoursesController extends Controller
         $deteccion->deteccion_facilitador()->sync($request->input('facilitadores', []));
 
         $deteccion->save();
+
+        User::role(['Coordinacion de FD y AP'])->each(function(User $user) use ($deteccion){
+            $user->notify(new DeteccionEditadaNotification($deteccion, $user));
+        });
 
         return Redirect::route('detecciones.index');
     }

@@ -4,6 +4,8 @@ import DeteccionesForm from "@/Pages/Views/academicos/forms/DeteccionesForm.vue"
 import {ref, computed} from "vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import NavLink from "@/Components/NavLink.vue";
+import {Head} from "@inertiajs/vue3";
+
 
 const props = defineProps({
     deteccion: {
@@ -26,6 +28,7 @@ const formatFechaI = computed(() => {
 
 <template>
     <AuthenticatedLayout>
+        <Head title="Deteccion" />
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{props.deteccion.nombreCurso}}</h2>
 
