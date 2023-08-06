@@ -10,6 +10,10 @@ import {Link, usePage} from '@inertiajs/vue3';
 const showingNavigationDropdown = ref(false);
 const docente = computed(() => usePage().props.info[0]);
 const user = computed(() => usePage().props.auth.user);
+const number_notification = computed(() => usePage().props.notification_count[0]);
+const coordinacion_notification = computed(() => usePage().props.coordinacion_notification[0]);
+
+console.log(coordinacion_notification.value)
 </script>
 
 <template>
@@ -62,7 +66,37 @@ const user = computed(() => usePage().props.auth.user);
                             </div>
                         </div>
 
+
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
+                            <div class="hidden sm:flex sm:items-center sm:ml-6">
+                                <!-- Settings Dropdown -->
+                                <div class="ml-3 relative">
+                                    <Dropdown align="right" width="48">
+                                        <template #trigger>
+                                            <v-badge
+                                                color="red"
+                                                :content="number_notification"
+                                            >
+                                                <span class="inline-flex rounded-md">
+                                                    <button
+                                                        type="button"
+                                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
+                                                    >
+                                                    <v-icon icon="mdi-bell"></v-icon>
+                                                </button>
+                                                </span>
+                                            </v-badge>
+                                        </template>
+                                        <template #content>
+                                            <div v-for="notification in coordinacion_notification">
+                                                <DropdownLink :href="notification.data.route + '/' + notification.data.id" class="">
+                                                    {{notification.data.messegue}} de {{notification.data.email}}
+                                                </DropdownLink>
+                                            </div>
+                                        </template>
+                                    </Dropdown>
+                                </div>
+                            </div>
                             <!-- Settings Dropdown -->
                             <div class="ml-3 relative">
                                 <Dropdown align="right" width="48">

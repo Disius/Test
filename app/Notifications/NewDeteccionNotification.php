@@ -53,6 +53,8 @@ class NewDeteccionNotification extends Notification
         return [
             'email' => $this->detecciones->jefe_academico->email,
             'id' => $this->detecciones->id,
+            'route' => '/coordinacion/detecciones/deteccion',
+            'messegue' => "Se ha creado una nueva deteccion de necesidades"
         ];
     }
 }
