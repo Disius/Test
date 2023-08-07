@@ -25,4 +25,12 @@ class NotificationController extends Controller
             return null;
         }
     }
+
+    public function markNotifications(Request $request){
+        auth()->user()->unreadNotifications
+            ->when($request->id, function ($query) use ($request){
+                return $query->where('id', $request->input('id'));
+            })->markAsRead();
+        return response()->noContent(200);
+    }
 }

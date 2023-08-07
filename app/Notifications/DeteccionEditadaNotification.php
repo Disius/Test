@@ -54,7 +54,7 @@ class DeteccionEditadaNotification extends Notification
             'id' => $this->detecciones->id,
             'email' => $this->detecciones->jefe_academico->email,
             'route' => '/coordinacion/detecciones/deteccion',
-            'messegue' => 'edito la deteccion de necesidades'
+            'messegue' => 'Edito la deteccion de necesidades'
         ];
     }
 }

@@ -6,6 +6,7 @@ import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import {Link, usePage} from '@inertiajs/vue3';
+import PrimaryButton from "@/Components/PrimaryButton.vue";
 
 const showingNavigationDropdown = ref(false);
 const docente = computed(() => usePage().props.info[0]);
@@ -91,6 +92,9 @@ console.log(coordinacion_notification.value)
                                             <div v-for="notification in coordinacion_notification">
                                                 <DropdownLink :href="notification.data.route + '/' + notification.data.id" class="">
                                                     {{notification.data.messegue}} de {{notification.data.email}}
+                                                    <NavLink :href="route('markNotification')" :data="{ id: notification.id }" method="post" as="button">
+                                                        <primary-button class="mt-2">Notificación vista <v-icon class="ml-3">mdi-eye</v-icon></primary-button>
+                                                    </NavLink>
                                                 </DropdownLink>
                                             </div>
                                         </template>

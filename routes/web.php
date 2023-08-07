@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CoursesController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post('/profile/docente', [ProfileController::class, 'DocenteProfileCreate'])->name('docente.create');
     Route::put('/profile/docente/actualizado/{id}', [ProfileController::class, 'update_docente'])->name('update.docente');
+
+
+    Route::post('/notificacion/leida', [NotificationController::class, 'markNotifications'])->name('markNotification');
 });
 
 require __DIR__.'/auth.php';

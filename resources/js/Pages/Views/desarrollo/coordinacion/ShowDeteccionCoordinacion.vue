@@ -4,7 +4,7 @@ import TablaDetecciones from "@/Pages/Views/desarrollo/tablas/TablaDetecciones.v
 import {computed} from "vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import TextInput from "@/Components/TextInput.vue";
-import {useForm} from "@inertiajs/vue3";
+import {useForm, Head} from "@inertiajs/vue3";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 
 const props = defineProps({
@@ -31,6 +31,7 @@ const formAceptado = useForm({
 </script>
 
 <template>
+    <Head title="Deteccion" />
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{props.deteccion.nombreCurso}}</h2>
