@@ -57,6 +57,11 @@ const coordinacion_notification = computed(() => usePage().props.coordinacion_no
                                         Detecciones
                                     </NavLink>
                                 </template>
+                                <template v-if="user.role === 1 || user.role === 2">
+                                    <NavLink :href="route('index.desarrollo.cursos')" :active="route().current('index.desarrollo.cursos')">
+                                        Cursos
+                                    </NavLink>
+                                </template>
                                 <template v-if="user.role === 4">
                                     <NavLink :href="route('index.cursos.docentes')" :active="route().current('index.cursos.docentes')">
                                         Cursos

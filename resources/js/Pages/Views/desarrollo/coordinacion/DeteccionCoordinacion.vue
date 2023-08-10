@@ -2,6 +2,8 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import TablaDetecciones from "@/Pages/Views/desarrollo/tablas/TablaDetecciones.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
+import NavLink from "@/Components/NavLink.vue";
+
 
 const props = defineProps({
     detecciones: Array,
@@ -17,7 +19,9 @@ const props = defineProps({
 
         <v-row justify="end" class="mt-2">
             <v-col cols="2">
-                <PrimaryButton>Ver todos los registros</PrimaryButton>
+                <NavLink :href="route('index.registros.c')" as="button">
+                    <PrimaryButton>Ver todos los registros</PrimaryButton>
+                </NavLink>
             </v-col>
         </v-row>
         <div class="py-12">

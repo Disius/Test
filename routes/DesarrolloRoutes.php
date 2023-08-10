@@ -38,6 +38,8 @@ Route::middleware(['auth', 'role:Jefe del Departamento de Desarrollo Academico|C
         Route::get('/coordinacion/detecciones/deteccion/{id}', [CoordinacionController::class, 'show'])->name('show.Cdetecciones');
         Route::put('/coordinacion/detecciones/deteccion/observacion/{id}', [CoordinacionController::class, 'update'])->name('update.observaciones');
         Route::post('/coordinacion/detecciones/aceptado/{id}', [CoordinacionController::class, 'store'])->name('store.aceptado');
-
+        Route::get('/coordinacion/registros', [CoordinacionController::class, 'index_registros'])->name('index.registros.c');
     });
+
+    Route::get('/desarrollo/cursos', [CoursesController::class, 'desarrollo_cursos'])->name('index.desarrollo.cursos');
 });

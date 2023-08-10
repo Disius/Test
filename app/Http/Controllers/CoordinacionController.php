@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DeteccionNecesidades;
 use App\Models\User;
+use App\Notifications\AceptadoNotification;
 use App\Notifications\ObservacionNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -22,6 +23,15 @@ class CoordinacionController extends Controller
 
         return Inertia::render('Views/desarrollo/coordinacion/DeteccionCoordinacion', [
             'detecciones' => $detecciones
+        ]);
+    }
+
+    public function index_registros(){
+        $detecciones = DeteccionNecesidades::with('carrera', 'deteccion_facilitador', 'docente_inscrito')
+            ->where('aceptado', '=', 1)
+                        ->get();
+        return Inertia::render('Views/desarrollo/coordinacion/Show.Registros.C', [
+            'detecciones' => $detecciones,
         ]);
     }
 
@@ -48,6 +58,10 @@ class CoordinacionController extends Controller
         $detecciones->aceptado = $request->aceptado;
 
         $detecciones->save();
+
+        User::role(['Jefes Academicos'])->each(function(User $user) use ($detecciones){
+            $user->notify(new AceptadoNotification($detecciones, $user));
+        });
 
         return Redirect::route('index.detecciones');
     }

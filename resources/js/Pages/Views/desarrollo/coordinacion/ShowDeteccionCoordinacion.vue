@@ -35,9 +35,11 @@ const formAceptado = useForm({
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{props.deteccion.nombreCurso}}</h2>
-            <form @submit.prevent="formAceptado.post(route('store.aceptado', props.deteccion.id))">
-                <PrimaryButton class="mt-5">Aceptar Deteccion de Necesidades</PrimaryButton>
-            </form>
+            <template v-if="props.deteccion.aceptado === 0">
+                <form @submit.prevent="formAceptado.post(route('store.aceptado', props.deteccion.id))">
+                    <PrimaryButton class="mt-5">Aceptar Deteccion de Necesidades</PrimaryButton>
+                </form>
+            </template>
         </template>
 
         <div class="py-12">
@@ -145,9 +147,10 @@ const formAceptado = useForm({
                                         <span>{{props.deteccion.observaciones}}</span>
                                     </div>
                                 </template>
-                                <form @submit.prevent="form.put(route('update.observaciones', props.deteccion.id))">
-                                    <div class="flow-root ... pt-5">
-                                        <strong>Añadir Observaciones: </strong>
+                                <template v-if="props.deteccion.aceptado === 0">
+                                    <form @submit.prevent="form.put(route('update.observaciones', props.deteccion.id))">
+                                        <div class="flow-root ... pt-5">
+                                            <strong>Añadir Observaciones: </strong>
                                             <!--                                <InputLabel for="observaciones" value="Añadir Observaciones" />-->
                                             <TextInput
                                                 id="observaciones"
@@ -158,8 +161,9 @@ const formAceptado = useForm({
                                             />
                                             <PrimaryButton class="mt-4">Guardar.</PrimaryButton>
 
-                                    </div>
-                                </form>
+                                        </div>
+                                    </form>
+                                </template>
                             </div>
                         </div>
                     </div>

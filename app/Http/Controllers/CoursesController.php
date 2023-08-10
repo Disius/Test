@@ -217,4 +217,13 @@ class CoursesController extends Controller
             'docente' => $docente,
         ]);
     }
+
+    public function desarrollo_cursos(){
+        $cursos = DeteccionNecesidades::with(['carrera', 'deteccion_facilitador', 'docente_inscrito'])->where('aceptado', '=', 1)
+            ->get();
+
+        return Inertia::render('Views/cursos/desarrollo/Desarrollo.Cursos', [
+            'cursos' => $cursos,
+        ]);
+    }
 }
