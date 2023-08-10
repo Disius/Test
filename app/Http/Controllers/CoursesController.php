@@ -209,4 +209,12 @@ class CoursesController extends Controller
         $deteccion->docente_inscrito()->sync($request->input('id_docente'));
         return Redirect::route('index.cursos.docentes');
     }
+
+    public function misCursos(){
+        $docente = Docente::with('inscrito')->where('id', '=', auth()->user()->docente_id)->first();
+
+        return Inertia::render('Views/cursos/MisCursosDocentes', [
+            'docente' => $docente,
+        ]);
+    }
 }

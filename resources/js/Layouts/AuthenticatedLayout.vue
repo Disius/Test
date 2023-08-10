@@ -13,8 +13,6 @@ const docente = computed(() => usePage().props.info[0]);
 const user = computed(() => usePage().props.auth.user);
 const number_notification = computed(() => usePage().props.notification_count[0]);
 const coordinacion_notification = computed(() => usePage().props.coordinacion_notification[0]);
-
-console.log(coordinacion_notification.value)
 </script>
 
 <template>
@@ -62,6 +60,11 @@ console.log(coordinacion_notification.value)
                                 <template v-if="user.role === 4">
                                     <NavLink :href="route('index.cursos.docentes')" :active="route().current('index.cursos.docentes')">
                                         Cursos
+                                    </NavLink>
+                                </template>
+                                <template v-if="user.role === 4">
+                                    <NavLink :href="route('index.misCursos')" :active="route().current('index.misCursos')">
+                                        Mis Cursos
                                     </NavLink>
                                 </template>
                             </div>
