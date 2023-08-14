@@ -3,13 +3,23 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import {Head} from "@inertiajs/vue3";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import NavLink from "@/Components/NavLink.vue";
+import {ref} from "vue";
+import DeteccionDialog from "@/Pages/Views/academicos/dialogs/DeteccionDialog.PDF.vue";
 
 
 const props = defineProps({
     detecciones: {
         type: Array
     }
-})
+});
+
+const pdf_dialog = ref(false);
+
+const menu = [
+    {
+        name: "Generar Deteccion de Necesidades"
+    }
+]
 </script>
 
 <template>
@@ -18,6 +28,25 @@ const props = defineProps({
 
         <v-container>
             <v-row justify="end">
+                <v-col cols="6">
+                    <v-menu>
+                        <template v-slot:activator="{ props }">
+                            <v-btn v-bind="props" size="x-large">
+                                <v-icon>mdi-file-pdf-box</v-icon>
+                            </v-btn>
+                        </template>
+                        <v-list>
+                            <v-list-item
+                                v-for="(item, index) in menu"
+                                :key="item.id"
+                                :value="item.id"
+                                link
+                            >
+                                <v-list-item-title @click="pdf_dialog = true">{{ item.name }}</v-list-item-title>
+                            </v-list-item>
+                        </v-list>
+                    </v-menu>
+                </v-col>
                 <v-col cols="2">
                     <NavLink :href="route('detecciones.create')" :active="route().current('detecciones.create')">
                         <PrimaryButton>CREAR DETECCION DE NECESIDADES</PrimaryButton>
@@ -31,7 +60,8 @@ const props = defineProps({
             </v-row>
         </v-container>
 
-
+        <DeteccionDialog v-model="pdf_dialog"></DeteccionDialog>
+        <!--Tabla-->
         <div class="">
             <div class=" mx-auto sm:px-6 lg:px-8 space-y-6">
                 <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
