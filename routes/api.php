@@ -15,6 +15,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth')->prefix('pdf')->group(function () {
-    Route::get('/deteccion', [PDFController::class, 'deteccion_pdf'])->name('pdf.deteccion');
-});
+//Route::middleware('auth:api')->prefix('pdf')->group(function () {
+//    Route::get('/deteccion', [PDFController::class, 'deteccion_pdf'])->name('pdf.deteccion');
+//});

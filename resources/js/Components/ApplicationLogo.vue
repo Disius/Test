@@ -3,7 +3,7 @@
 import {computed} from "vue";
 
 const bgimage = {
-    backgroundImage:'url(http://test.test/storage/img/ITTG_Escudo)',
+    backgroundImage:'url(/storage/img/ITTG.png)',
     backgroundSize: 'cover'
 }
 

@@ -231,9 +231,14 @@
             </p>
         </div>
         <div class="logo">
-            <img src="/storage/app/img/ITTG_Escudo" alt="">
+            <img src="{{public_path('/storage/img/ITTG.png')}}" alt="">
+        </div>
+        <div class="titleCentered espacio">
+            <p>Subdirección Académica</p>
+            <p>Departamento Académico: </p>
         </div>
     </div>
+    @dump($deteccion)
 
 </body>
 

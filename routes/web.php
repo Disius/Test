@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CoursesController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PDFController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -41,6 +42,10 @@ Route::middleware('auth')->group(function () {
 
 
     Route::post('/notificacion/leida', [NotificationController::class, 'markNotifications'])->name('markNotification');
+
+    Route::prefix('pdf')->group(function () {
+        Route::get('/deteccion', [PDFController::class, 'deteccion_pdf'])->name('pdf.deteccion');
+    });
 });
 
 require __DIR__.'/auth.php';
