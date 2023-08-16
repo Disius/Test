@@ -10,6 +10,9 @@ import DeteccionDialog from "@/Pages/Views/academicos/dialogs/DeteccionDialog.PD
 const props = defineProps({
     detecciones: {
         type: Array
+    },
+    carrera: {
+        type: Array
     }
 });
 
@@ -32,7 +35,7 @@ const menu = [
                     <v-menu>
                         <template v-slot:activator="{ props }">
                             <v-btn v-bind="props" size="x-large">
-                                <v-icon>mdi-file-pdf-box</v-icon>
+                                Documentos
                             </v-btn>
                         </template>
                         <v-list>
@@ -60,7 +63,7 @@ const menu = [
             </v-row>
         </v-container>
 
-        <DeteccionDialog v-model="pdf_dialog"></DeteccionDialog>
+        <DeteccionDialog :carreras="props.carrera" v-model="pdf_dialog" @update:modelValue="pdf_dialog = $event"></DeteccionDialog>
         <!--Tabla-->
         <div class="">
             <div class=" mx-auto sm:px-6 lg:px-8 space-y-6">

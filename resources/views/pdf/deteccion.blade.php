@@ -223,8 +223,17 @@
 </head>
 
 <body>
-
-
+{{--    Aqui nombre del insituto--}}
+    <div class="w100">
+        <div class="header">
+            <p>
+                INSTITUTO TECNOLÓGICO DE TUXTLA GUTIÉRREZ
+            </p>
+        </div>
+        <div class="logo">
+            <img src="/storage/app/img/ITTG_Escudo" alt="">
+        </div>
+    </div>
 
 </body>
 

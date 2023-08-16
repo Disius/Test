@@ -27,9 +27,10 @@ class CoursesController extends Controller
             ->where('aceptado', '=', 0)
             ->orderBy('id', 'desc')->get();
 
-
+        $carrera = Carrera::select('id', 'nameCarrera')->get();
         return Inertia::render('Views/academicos/Index.Detecciones',[
-            'detecciones' => $detecciones
+            'detecciones' => $detecciones,
+            'carrera' => $carrera,
         ]);
     }
 
