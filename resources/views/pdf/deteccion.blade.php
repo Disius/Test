@@ -235,10 +235,38 @@
         </div>
         <div class="titleCentered espacio">
             <p>Subdirección Académica</p>
-            <p>Departamento Académico: </p>
+            <p>Departamento Académico: {{$pdf_data[0]->departamento->nameDepartamento}}</p>
+        </div>
+        <div class="titleCentered mb-3">
+            <p>DIAGNÓSTICO DE NECESIDADES DE</p>
+            <p>FORMACIÓN Y ACTUALIZACIÓN PROFESIONAL DOCENTE </p>
+        </div>
+        <div class="leftAlinement m-0 mb-2">
+            <p  id="title">PARA LOS(AS) PROFESORES(AS) DE LA ACADEMIA DE  {{ $pdf_data[0]->carrera->nameCarrera }} </p>
+            <p>Fecha de realización del diagnóstico: {{ $pdf_data[0]->created_at->format('Y-m-d') }} </p>
+        </div>
+
+        <div class="mb-l">
+            <div class="leftAlinement m-0">
+                <p>Jefe (a)  del Departamento Académico</p>
+            </div>
+            <table class="custom">
+                <thead>
+                <tr>
+                    <th >Nombre</th>
+                    <th >Firma</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td > {{ $pdf_data[0]->jefe->nombre }} </td>
+                    <td> </td>
+                </tr>
+                </tbody>
+
+            </table>
         </div>
     </div>
-    @dump($deteccion)
 
 </body>
 

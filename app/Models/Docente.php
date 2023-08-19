@@ -26,5 +26,8 @@ class Docente extends Model
         return $this->hasMany(DeteccionNecesidades::class, 'id_jefe', 'id');
     }
 
+    public function jefe_deteccion(){
+        return $this->belongsTo(DeteccionNecesidades::class, 'id_jefe', 'id');
+    }
 
 }

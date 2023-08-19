@@ -70,6 +70,7 @@ class CoursesController extends Controller
             'dirigido' => 'required',
             'id_jefe' => 'required',
             'modalidad' => ['required'],
+            'id_departamento' => ['required'],
         ]);
 
         $deteccion = DeteccionNecesidades::create([
@@ -90,7 +91,8 @@ class CoursesController extends Controller
             'aceptado' => 0,
             'obs' => 0,
             'modalidad' => $request->modalidad,
-            'facilitador_externo' =>  $request->facilitador_externo
+            'facilitador_externo' =>  $request->facilitador_externo,
+            'id_departamento' => $request->id_departamento
         ]);
 
         $deteccion->save();

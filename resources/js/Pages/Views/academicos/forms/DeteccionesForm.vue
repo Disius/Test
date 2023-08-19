@@ -37,6 +37,7 @@ const form = useForm({
     dirigido: null,
     modalidad: null,
     id_jefe: user.value.docente_id,
+    id_departamento: user.value.departamento_id,
     facilitador_externo: null
 });
 

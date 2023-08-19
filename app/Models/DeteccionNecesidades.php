@@ -24,7 +24,7 @@ class DeteccionNecesidades extends Model
     protected $fillable = [
         'asignaturaFA', 'contenidosTM', 'numeroProfesores', 'periodo',
         'nombreCurso', 'fecha_I', 'fecha_F', 'hora_I', 'hora_F', 'objetivoEvento', 'tipo_FDoAP', 'tipo_actividad',
-        'carrera_dirigido', 'observaciones', 'id_jefe', 'obs', 'aceptado', 'modalidad', 'facilitador_externo', 'total_horas'
+        'carrera_dirigido', 'observaciones', 'id_jefe', 'obs', 'aceptado', 'modalidad', 'facilitador_externo', 'total_horas', 'id_departamento'
     ];
 
     /**
@@ -45,6 +45,11 @@ class DeteccionNecesidades extends Model
 
     ];
 
+    protected $dates = [
+        'created_at',
+        'updated_at'
+    ];
+
     public function deteccion_facilitador(){
         return $this->belongsToMany(Docente::class, 'deteccion_has_facilitadores', 'deteccion_id', 'docente_id');
     }
@@ -54,13 +59,14 @@ class DeteccionNecesidades extends Model
         return $this->hasOne(Carrera::class, 'id', 'carrera_dirigido');
     }
 
-    public function jefe_academico(): BelongsTo
+    public function departamento(): HasOne
     {
-        return $this->belongsTo(User::class, 'id_jefe', 'docente_id');
+        return $this->hasOne(Departamento::class, 'id', 'id_departamento');
     }
 
-    public function jefe(){
-        return $this->belongsTo(Docente::class, 'id_jefe');
+    public function jefe(): HasOne
+    {
+        return $this->hasOne(Docente::class, 'id', 'id_jefe');
     }
 
     public function docente_inscrito(): BelongsToMany
