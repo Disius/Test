@@ -259,7 +259,7 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td > {{ $pdf_data[0]->jefe->nombre }} </td>
+                    <td> {{ $pdf_data[0]->jefe->nombre }} </td>
                     <td> </td>
                 </tr>
                 </tbody>
