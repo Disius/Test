@@ -259,12 +259,193 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td> {{ $pdf_data[0]->jefe->nombre }} </td>
+                    <td> {{ $pdf_data[0]->jefe->nombre }} {{$pdf_data[0]->jefe->apellidoPat}} {{$pdf_data[0]->jefe->apellidoMat}}</td>
                     <td> </td>
                 </tr>
                 </tbody>
-
             </table>
+        </div>
+        <div class="mb-l">
+            <div class="leftAlinement m-8">
+                <p>Presidente (s) de Academia</p>
+            </div>
+{{--            Aca va el presidente de la academia--}}
+            <table class="custom">
+                <thead>
+                    <tr>
+                        <th >Nombre</th>
+                        <th >Firma</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>  </td>
+                        <td>  </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="titulo">
+            <p>a) PRIORIZAR LAS DIMENSIONES DE LA EVALUACIÓN DOCENTE EN LAS QUE
+                REQUIERE LA FORMACIÓN DOCENTE DE EL/LA PROFESOR(A), AVALADOS
+                POR LA ACADEMIA.
+            </p>
+        </div>
+        <table class="customA">
+            <thead>
+                <tr>
+                    <th>Dimensión(es)
+                        en la(s) que
+                        se requiere
+                        Formación
+                        Docente
+                    </th>
+                    <th>
+                        Competencia(s) en
+                        la(s) que se requiere
+                        la Formación
+                        Docente
+                    </th>
+                    <th>
+                        Número de
+                        profesores(as)
+                        que requieren
+                        Formación
+                        Docente
+                    </th>
+                    <th>
+                        Periodo en el
+                        que se requiere
+                        la Formación
+                        Docente (enero-junio o agosto-
+                        diciembre)
+                    </th>
+                    <th>
+                        Facilitador
+                        (a) que
+                        impartirá el
+                        curso/taller
+                    </th>
+                </tr>
+            </thead>
+            @if(empty($deteccion_1))
+                <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            @else
+                @foreach($deteccion_1 as $deteccion)
+                    <tbody>
+                    <tr>
+                        <td class="text-sm-h6">{{$deteccion->asignaturaFA}}</td>
+                        <td>{{$deteccion->contenidosTM}}</td>
+                        <td>{{$deteccion->numeroProfesores}}</td>
+                        <td>
+                            @if($deteccion->periodo === 1)
+                                ENERO-JUNIO
+                            @else
+                                AGOSTO-DICIEMBRE
+                            @endif
+                        </td>
+                        <td>
+                            @foreach($deteccion->deteccion_facilitador as $facilitador)
+                                {{$facilitador->nombre }} {{$facilitador->apellidoPat}} {{$facilitador->apellidoMat}}
+                            @endforeach
+                        </td>
+                    </tr>
+                    </tbody>
+                @endforeach
+            @endif
+        </table>
+        <div class="titulo">
+            <p>b) PRIORIZAR LAS ASIGNATURAS EN LAS QUE REQUIERE ACTUALIZACIÓN
+                PROFESIONAL DE EL/LA PROFESOR(A), AVALADOS POR LA ACADEMIA.</p>
+        </div>
+        <div class="w100">
+            <table class="customA">
+                <thead>
+                    <tr>
+                        <th>Asignatura(s)
+                            en la(s) que
+                            se requiere
+                            Actualización
+                            profesional
+                        </th>
+                        <th>Contenidos
+                            temáticos en que se
+                            requiere
+                            Actualización
+                            Profesional</th>
+                        <th>Número de
+                            profesores
+                            (as) que
+                            requieren
+                            Actualización
+                            Profesional
+                        </th>
+                        <th>Periodo en el
+                            que se requiere
+                            la Actualización
+                            Profesional
+                            (enero-junio o
+                            agosto
+                            diciembre)
+                        </th>
+                        <th>Facilitador
+                            (a) que
+                            impartirá el
+                            curso/taller</th>
+                    </tr>
+                </thead>
+                @if(empty($deteccion_2))
+                    <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                @else
+                    @foreach($deteccion_2 as $deteccion2)
+                        <tbody>
+                        <tr>
+                            <td class="text-sm-h6">{{$deteccion2->asignaturaFA}}</td>
+                            <td>{{$deteccion2->contenidosTM}}</td>
+                            <td>{{$deteccion2->numeroProfesores}}</td>
+                            <td>
+                                @if($deteccion2->periodo === 1)
+                                    ENERO-JUNIO
+                                @else
+                                    AGOSTO-DICIEMBRE
+                                @endif
+                            </td>
+                            <td>
+                                @foreach($deteccion2->deteccion_facilitador as $facilitador)
+                                    {{$facilitador->nombre }} {{$facilitador->apellidoPat}} {{$facilitador->apellidoMat}}
+                                @endforeach
+                            </td>
+                        </tr>
+                        </tbody>
+                    @endforeach
+                @endif
+            </table>
+            <div class="preFooter">
+                <p>
+                    <a>Nota: </a> La formación docente estará atendida prioritariamente con el Programa Nacional de Formación Docente Centrado en el Aprendizaje (Formación DOCA)
+                </p>
+            </div>
+            <div class="footer" style="padding-top:10px">
+                <!--  i will make this dinamic for sure -->
+                <p style="display:inline;float:left"> </p>
+                <p style="display:inline;float:right">  </p>
+            </div>
         </div>
     </div>
 

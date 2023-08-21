@@ -10,13 +10,24 @@ class PDFController extends Controller
 {
     public function deteccion_pdf(Request $request){
 
-        $pdf_data = DeteccionNecesidades::with(['carrera', 'deteccion_facilitador', 'jefe_deteccion', 'departamento'])
+        $pdf_data = DeteccionNecesidades::with(['carrera', 'deteccion_facilitador', 'jefe', 'departamento'])
             ->where('periodo', '=', $request->input('periodo'))
             ->where('carrera_dirigido', '=', $request->input('carrera'))
             ->whereYear('created_at', '=', $request->input('anio'))->get();
 
+        $deteccion_1 = DeteccionNecesidades::with(['carrera', 'deteccion_facilitador', 'jefe', 'departamento'])
+            ->where('periodo', '=', $request->input('periodo'))
+            ->where('carrera_dirigido', '=', $request->input('carrera'))
+            ->where('tipo_FDoAP', '=', 1)
+            ->whereYear('created_at', '=', $request->input('anio'))->get();
+        $deteccion_2 = DeteccionNecesidades::with(['carrera', 'deteccion_facilitador', 'jefe', 'departamento'])
+            ->where('periodo', '=', $request->input('periodo'))
+            ->where('carrera_dirigido', '=', $request->input('carrera'))
+            ->where('tipo_FDoAP', '=', 2)
+            ->whereYear('created_at', '=', $request->input('anio'))->get();
+
         $pdf = app('dompdf.wrapper');
-        $content = $pdf->loadView('pdf.deteccion', compact('pdf_data'))
+        $content = $pdf->loadView('pdf.deteccion', compact('pdf_data', 'deteccion_1', 'deteccion_2'))
             ->setPaper('a4', 'portrait')
             ->output();
         Storage::disk('local')->put('deteccion.pdf', $content);
