@@ -47,7 +47,9 @@ class DeteccionNecesidades extends Model
 
     protected $dates = [
         'created_at',
-        'updated_at'
+        'updated_at',
+        'fecha_I',
+        'fecha_F'
     ];
 
     public function deteccion_facilitador(){

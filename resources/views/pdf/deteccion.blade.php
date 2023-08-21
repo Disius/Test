@@ -443,12 +443,179 @@
             </div>
             <div class="footer" style="padding-top:10px">
                 <!--  i will make this dinamic for sure -->
-                <p style="display:inline;float:left"> </p>
-                <p style="display:inline;float:right">  </p>
+                <p style="display:inline;float:left">ITTG-AC-PO-006-01  </p>
+                <p style="display:inline;float:right"> aqui revisión* </p>
             </div>
         </div>
     </div>
-
+    <div class="page_break"></div>
+    <div class="w100">
+        <div class="logo">
+            <img src="{{asset('/storage/img/ITTG.png')}}" alt="">
+        </div>
+        <div class="header">
+            <p>INSTITUTO TECNOLÓGICO DE TUXTLA GUTIÉRREZ</p>
+        </div>
+        <div class="titleCentered mb-3">
+            <p>CONCENTRADO DEL DIAGNÓSTICO DE NECESIDADES DE</p>
+            <p>FORMACIÓN DOCENTE Y ACTUALIZACIÓN PROFESIONAL</p>
+        </div>
+        <div class="titulo">
+            <p>c) ACTIVIDADES O EVENTOS QUE SE LLEVARÁN A CABO PARA LA FORMACIÓN
+                DOCENTE DE EL/LA PROFESOR(A) EN LAS DIMENSIONES DE LA EVALUACIÓN
+                DOCENTE</p>
+        </div>
+        <table class="customA">
+            <thead>
+                <tr>
+                    <th>Nombre del curso, taller,
+                        conferencias, etc.</th>
+                    <th>
+                        Fecha en que se
+                        realizará la actividad
+                        o evento
+                    </th>
+                    <th>
+                        Horario en que
+                        se realizará la
+                        actividad o
+                        evento
+                    </th>
+                    <th>
+                        Objetivo de la
+                        actividad o
+                        evento
+                    </th>
+                </tr>
+            </thead>
+            @if(empty($deteccion_1))
+                <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            @else
+                @foreach($deteccion_1 as $deteccion)
+                    <tbody>
+                    <tr>
+                        <td class="text-sm-h6">{{$deteccion->nombreCurso}}</td>
+                        <td>{{$deteccion->fecha_I}} al {{$deteccion->fecha_F}}</td>
+                        <td>{{$deteccion->hora_I}} - {{$deteccion->hora_F}}</td>
+                        <td>
+                            {{$deteccion->objetivoEvento}}
+                        </td>
+                    </tr>
+                    </tbody>
+                @endforeach
+            @endif
+        </table>
+        <div class="titulo">
+            <p>d) ACTIVIDADES O EVENTOS QUE SE LLEVARÁN A CABO PARA LA
+                ACTUALIZACIÓN PROFESIONAL DE EL/LA PROFESOR(A) EN ASIGNATURAS
+                QUE SE REQUIEREN.</p>
+        </div>
+        <table class="customA">
+            <thead>
+                <tr>
+                    <th>Nombre del curso, taller,
+                        conferencias, etc.</th>
+                    <th>
+                        Fecha en que se
+                        realizará la actividad
+                        o evento
+                    </th>
+                    <th>
+                        Horario en que
+                        se realizará la
+                        actividad o
+                        evento
+                    </th>
+                    <th>
+                        Objetivo de la
+                        actividad o
+                        evento
+                    </th>
+                </tr>
+            </thead>
+            @if(empty($deteccion_2))
+                <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            @else
+                @foreach($deteccion_2 as $deteccion2)
+                    <tbody>
+                    <tr>
+                        <td class="text-sm-h6">{{$deteccion->nombreCurso}}</td>
+                        <td>{{$deteccion->fecha_I}} al {{$deteccion->fecha_F}}</td>
+                        <td>{{$deteccion->hora_I}} - {{$deteccion->hora_F}}</td>
+                        <td>
+                            {{$deteccion->objetivoEvento}}
+                        </td>
+                    </tr>
+                    </tbody>
+                @endforeach
+            @endif
+        </table>
+        <div class="mb-l mt-5">
+            <div class="leftAlinement m-0">
+                <p>Subdirección Académica</p>
+            </div>
+            <table class="custom">
+                <thead>
+                    <tr>
+                        <th>Nombre </th>
+                        <th>Firma </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Aqui nombre de sudirector(a)* </td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="mb-l">
+            <div class="leftAlinement m-0">
+                <p>
+                    Jefa(e) de Departamento Académico
+                </p>
+            </div>
+            <table class="custom">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Departamento</th>
+                        <th>Firma</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="preFooter">
+            <p><a>Nota: </a> La formación docente estará atendida prioritariamente con el Programa Nacional de Formación Docente Centrado en el Aprendizaje (Formación DOCA)</p>
+        </div>
+        <div class="footer" style="padding-top:10px">
+            <!--  i will make this dinamic for sure -->
+            <p style="display:inline;float:left"> ITTG-AC-PO-006-01  </p>
+            <p style="display:inline;float:right"> aqui revision* </p>
+        </div>
+    </div>
 </body>
 
 </html>
