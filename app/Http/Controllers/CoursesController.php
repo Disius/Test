@@ -207,6 +207,14 @@ class CoursesController extends Controller
             'curso' => $curso
         ]);
     }
+
+    public function index_curso_inscrito_desarrollo($id){
+        $curso = DeteccionNecesidades::with(['carrera', 'deteccion_facilitador', 'docente_inscrito'])->where('aceptado', '=', 1)
+            ->find($id);
+        return Inertia::render('Views/cursos/desarrollo/Inscritos.Desarrollo', [
+            'curso' => $curso
+        ]);
+    }
     public function inscripcion_docente(Request $request, $id){
         $deteccion = DeteccionNecesidades::find($id);
         $deteccion->docente_inscrito()->sync($request->input('id_docente'));

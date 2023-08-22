@@ -51,7 +51,7 @@ class NewDeteccionNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'email' => $this->detecciones->jefe_academico->email,
+            'email' => $this->detecciones->jefe->email,
             'id' => $this->detecciones->id,
             'route' => '/coordinacion/detecciones/deteccion',
             'messegue' => "Se ha creado una nueva deteccion de necesidades"

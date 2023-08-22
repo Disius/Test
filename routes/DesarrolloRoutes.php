@@ -42,4 +42,5 @@ Route::middleware(['auth', 'role:Jefe del Departamento de Desarrollo Academico|C
     });
 
     Route::get('/desarrollo/cursos', [CoursesController::class, 'desarrollo_cursos'])->name('index.desarrollo.cursos');
+    Route::get('/desarrollo/curso/{id}', [CoursesController::class, 'index_curso_inscrito_desarrollo'])->name('index.desarrollo.inscritos');
 });
