@@ -193,7 +193,7 @@ class CoursesController extends Controller
 
     public function index_cursos_academico(){
         $cursos = DeteccionNecesidades::with(['carrera', 'deteccion_facilitador', 'docente_inscrito'])->where('aceptado', '=', 1)
-//            ->where('id_jefe', auth()->user()->docente_id)
+            ->where('id_jefe', '=', auth()->user()->docente_id)
         ->get();
         return Inertia::render('Views/cursos/academicos/CursosAcademicos', [
             'cursos' => $cursos

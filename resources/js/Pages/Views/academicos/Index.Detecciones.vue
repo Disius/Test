@@ -28,6 +28,9 @@ const menu = [
 <template>
     <AuthenticatedLayout>
         <Head title="Detecciones"/>
+        <template #header>
+            <h2 class="text-lg font-medium text-gray-900">Deteccion de Necesidades</h2>
+        </template>
 
         <v-container>
             <v-row justify="end">

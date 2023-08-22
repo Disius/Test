@@ -34,4 +34,9 @@ class PDFController extends Controller
 
         return Storage::download('deteccion.pdf');
     }
+    public function PIFDAP_pdf(Request $request){
+        $pdf_data = DeteccionNecesidades::with(['carrera', 'deteccion_facilitador', 'jefe', 'departamento'])
+            ->where('periodo', '=', $request->input('periodo'))
+            ->whereYear('created_at', '=', $request->input('anio'))->get();
+    }
 }

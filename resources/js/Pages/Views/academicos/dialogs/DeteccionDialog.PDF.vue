@@ -1,11 +1,5 @@
 <script setup>
-
-
-
-import TextInput from "@/Components/TextInput.vue";
-import InputLabel from "@/Components/InputLabel.vue";
 import {computed, ref} from "vue";
-import {router} from "@inertiajs/vue3";
 import {saveAs} from "save-as";
 
 const props = defineProps({
