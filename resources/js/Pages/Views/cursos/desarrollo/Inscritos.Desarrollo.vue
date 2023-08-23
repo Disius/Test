@@ -1,9 +1,10 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import {computed} from "vue";
+import {computed, onMounted} from "vue";
 
 const props = defineProps({
-    curso: Object
+    curso: Object,
+    auth: Object
 });
 
 const formatFechaF = computed(() => {
@@ -14,6 +15,26 @@ const formatFechaF = computed(() => {
 
 const formatFechaI = computed(() => {
     return new Date(props.curso.fecha_I).toLocaleDateString('es-MX');
+});
+
+
+onMounted(() => {
+    window.Echo.private(`App.Models.User.${props.auth.user.id}`).notification((notification) => {
+        switch (notification.type){
+            case 'App\\Notifications\\NewDeteccionNotification':
+                props.auth.usernotifications++
+                break;
+            case 'App\\Notifications\\DeteccionEditadaNotification':
+                props.auth.usernotifications++
+                break;
+            case 'App\\Notifications\\AceptadoNotification':
+                props.auth.usernotifications++
+                break;
+            case 'App\\Notifications\\ObservacionNotification':
+                props.auth.usernotifications++
+                break;
+        }
+    })
 });
 </script>
 
@@ -155,6 +176,11 @@ const formatFechaI = computed(() => {
                         <td>{{inscrito.nombre}}</td>
                         <td>{{inscrito.apellidoPat}}</td>
                         <td>{{inscrito.apellidoMat}}</td>
+                        <td>
+                            <v-btn prepend-icon="mdi-file-pdf-box">
+                                GENERAR CÉDULA DE INSCRIPCIÓN
+                            </v-btn>
+                        </td>
                     </tr>
                     </tbody>
                 </v-table>

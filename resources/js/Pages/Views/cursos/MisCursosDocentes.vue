@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import {computed} from "vue";
+import {computed, onMounted} from "vue";
 import {Head} from "@inertiajs/vue3";
 import TablaMisCursoDocente from "@/Pages/Views/cursos/tablas/TablaMisCursoDocente.vue";
 
@@ -9,7 +9,24 @@ const props = defineProps({
     auth: Object
 });
 
-
+onMounted(() => {
+    window.Echo.private(`App.Models.User.${props.auth.user.id}`).notification((notification) => {
+        switch (notification.type){
+            case 'App\\Notifications\\NewDeteccionNotification':
+                props.auth.usernotifications++
+                break;
+            case 'App\\Notifications\\DeteccionEditadaNotification':
+                props.auth.usernotifications++
+                break;
+            case 'App\\Notifications\\AceptadoNotification':
+                props.auth.usernotifications++
+                break;
+            case 'App\\Notifications\\ObservacionNotification':
+                props.auth.usernotifications++
+                break;
+        }
+    })
+});
 </script>
 
 <template>

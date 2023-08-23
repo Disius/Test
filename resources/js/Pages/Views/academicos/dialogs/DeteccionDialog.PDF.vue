@@ -23,7 +23,6 @@ const periodos = [
 const fullYears = computed(() => {
     const maxYears = new Date().getFullYear();
     const minYears = maxYears - 6;
-    console.log(minYears)
     const years = [];
 
     for (let i = maxYears; i >= minYears; i--) {
@@ -31,7 +30,7 @@ const fullYears = computed(() => {
     }
 
     return years
-})
+});
 
 function submit(){
     axios.get(route('pdf.deteccion'), {

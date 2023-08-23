@@ -1,5 +1,5 @@
 <script setup>
-import {computed, ref} from 'vue';
+import {computed, onBeforeMount, onMounted, ref} from 'vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
@@ -13,6 +13,22 @@ const docente = computed(() => usePage().props.info[0]);
 const user = computed(() => usePage().props.auth.user);
 const number_notification = computed(() => usePage().props.notification_count[0]);
 const coordinacion_notification = computed(() => usePage().props.coordinacion_notification[0]);
+
+// let usernotification = computed(() => usePage().props.auth.usernotifications);
+// const UserNotification = ref({
+//     noti: usernotification.value
+// });
+// onBeforeMount(() => {
+//     window.Echo.private(`App.Models.User.${user.value.id}`).notification((notification) => {
+//         switch (notification.type){
+//             case 'App\\Notifications\\ObservacionNotification':
+//                 console.log(UserNotification.value.noti++)
+//                 break;
+//         }
+//     })
+//
+//
+// });
 </script>
 
 <template>
@@ -84,7 +100,7 @@ const coordinacion_notification = computed(() => usePage().props.coordinacion_no
                                         <template #trigger>
                                             <v-badge
                                                 color="red"
-                                                :content="number_notification"
+                                                :content="$page.props.auth.usernotifications"
                                             >
                                                 <span class="inline-flex rounded-md">
                                                     <button
@@ -99,7 +115,7 @@ const coordinacion_notification = computed(() => usePage().props.coordinacion_no
                                         <template #content>
                                             <div v-for="notification in coordinacion_notification">
                                                 <DropdownLink :href="notification.data.route + '/' + notification.data.id" class="">
-                                                    {{notification.data.messegue}} de {{notification.data.email}}
+                                                    {{notification.data.email}} {{notification.data.messegue}}
                                                     <NavLink :href="route('markNotification')" :data="{ id: notification.id }" method="post" as="button">
                                                         <primary-button class="mt-2">Notificación vista <v-icon class="ml-3">mdi-eye</v-icon></primary-button>
                                                     </NavLink>

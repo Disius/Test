@@ -48,7 +48,7 @@ import TablaCarrera from "@/Pages/Views/desarrollo/tablas/TablaCarrera.vue";
 import NavLink from "@/Components/NavLink.vue";
 import {router} from "@inertiajs/vue3";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import FormCarrera from "@/Pages/Views/desarrollo/forms/CreateCarrera.vue";
 import CreateCarrera from "@/Pages/Views/desarrollo/forms/CreateCarrera.vue";
 import TablaDepartamento from "@/Pages/Views/desarrollo/tablas/TablaDepartamento.vue";
@@ -67,8 +67,29 @@ const props = defineProps({
     },
     departamento: {
         type: Array,
-    }
-})
+    },
+    auth: Object
+});
+
+
+onMounted(() => {
+    window.Echo.private(`App.Models.User.${props.auth.user.id}`).notification((notification) => {
+        switch (notification.type){
+            case 'App\\Notifications\\NewDeteccionNotification':
+                props.auth.usernotifications++
+                break;
+            case 'App\\Notifications\\DeteccionEditadaNotification':
+                props.auth.usernotifications++
+                break;
+            case 'App\\Notifications\\AceptadoNotification':
+                props.auth.usernotifications++
+                break;
+            case 'App\\Notifications\\ObservacionNotification':
+                props.auth.usernotifications++
+                break;
+        }
+    });
+});
 </script>
 
 <style scoped>

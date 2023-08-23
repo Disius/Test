@@ -3,7 +3,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import {Head} from "@inertiajs/vue3";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import NavLink from "@/Components/NavLink.vue";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import DeteccionDialog from "@/Pages/Views/academicos/dialogs/DeteccionDialog.PDF.vue";
 
 
@@ -13,7 +13,8 @@ const props = defineProps({
     },
     carrera: {
         type: Array
-    }
+    },
+    auth: Object
 });
 
 const pdf_dialog = ref(false);
@@ -22,7 +23,26 @@ const menu = [
     {
         name: "Generar Deteccion de Necesidades"
     }
-]
+];
+
+onMounted(() => {
+    window.Echo.private(`App.Models.User.${props.auth.user.id}`).notification((notification) => {
+        switch (notification.type){
+            case 'App\\Notifications\\NewDeteccionNotification':
+                props.auth.usernotifications++
+                break;
+            case 'App\\Notifications\\DeteccionEditadaNotification':
+                props.auth.usernotifications++
+                break;
+            case 'App\\Notifications\\AceptadoNotification':
+                props.auth.usernotifications++
+                break;
+            case 'App\\Notifications\\ObservacionNotification':
+                props.auth.usernotifications++
+                break;
+        }
+    })
+});
 </script>
 
 <template>

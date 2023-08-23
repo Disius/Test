@@ -30,4 +30,7 @@ class Docente extends Model
         return $this->belongsTo(DeteccionNecesidades::class, 'id_jefe', 'id');
     }
 
+    public function usuario(){
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
 }

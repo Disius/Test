@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import TablaDetecciones from "@/Pages/Views/desarrollo/tablas/TablaDetecciones.vue";
-import {computed} from "vue";
+import {computed, onMounted} from "vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import TextInput from "@/Components/TextInput.vue";
 import {useForm, Head} from "@inertiajs/vue3";
@@ -9,6 +9,7 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 
 const props = defineProps({
     deteccion: Object,
+    auth: Object
 });
 
 const formatFechaF = computed(() => {
@@ -28,6 +29,26 @@ const form = useForm({
 const formAceptado = useForm({
     aceptado: 1,
 })
+
+
+onMounted(() => {
+    window.Echo.private(`App.Models.User.${props.auth.user.id}`).notification((notification) => {
+        switch (notification.type){
+            case 'App\\Notifications\\NewDeteccionNotification':
+                props.auth.usernotifications++
+                break;
+            case 'App\\Notifications\\DeteccionEditadaNotification':
+                props.auth.usernotifications++
+                break;
+            case 'App\\Notifications\\AceptadoNotification':
+                props.auth.usernotifications++
+                break;
+            case 'App\\Notifications\\ObservacionNotification':
+                props.auth.usernotifications++
+                break;
+        }
+    })
+});
 </script>
 
 <template>

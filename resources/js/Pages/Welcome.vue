@@ -41,6 +41,9 @@ const nameCards = ref([
                 :key="card.name"
                 :cols="card.flex"
                 class="d-flex justify-center align-center md"
+                md="5"
+                sm="5"
+                xs="5"
             >
                 <Link :href="card.route"
                       as="card"

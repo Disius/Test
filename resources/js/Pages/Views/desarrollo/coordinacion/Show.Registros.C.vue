@@ -3,10 +3,31 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import TablaDetecciones from "@/Pages/Views/desarrollo/tablas/TablaDetecciones.vue";
 import TablaDeteccionesRegistrosCoordinacion
     from "@/Pages/Views/desarrollo/tablas/TablaDeteccionesRegistrosCoordinacion.vue";
+import {onMounted} from "vue";
 
 
 const props = defineProps({
    detecciones: Array,
+    auth: Object
+});
+
+onMounted(() => {
+    window.Echo.private(`App.Models.User.${props.auth.user.id}`).notification((notification) => {
+        switch (notification.type){
+            case 'App\\Notifications\\NewDeteccionNotification':
+                props.auth.usernotifications++
+                break;
+            case 'App\\Notifications\\DeteccionEditadaNotification':
+                props.auth.usernotifications++
+                break;
+            case 'App\\Notifications\\AceptadoNotification':
+                props.auth.usernotifications++
+                break;
+            case 'App\\Notifications\\ObservacionNotification':
+                props.auth.usernotifications++
+                break;
+        }
+    })
 });
 </script>
 

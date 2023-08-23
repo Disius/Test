@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import TablaCursoDocente from "@/Pages/Views/cursos/tablas/TablaCursoDocente.vue"
-import {computed, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import TablaCursoAcademico from "@/Pages/Views/cursos/tablas/TablaCursoAcademico.vue";
 import {Head} from "@inertiajs/vue3";
 import NavLink from "@/Components/NavLink.vue";
@@ -21,7 +21,26 @@ const menu = [
         name: "Generar PROGRAMA INSTITUCIONAL DE FORMACIÓN DOCENTE\n" +
             "INSTITUTO TECNOLÓGICO DE TUXTLA GUTIERREZ"
     }
-]
+];
+
+onMounted(() => {
+    window.Echo.private(`App.Models.User.${props.auth.user.id}`).notification((notification) => {
+        switch (notification.type){
+            case 'App\\Notifications\\NewDeteccionNotification':
+                props.auth.usernotifications++
+                break;
+            case 'App\\Notifications\\DeteccionEditadaNotification':
+                props.auth.usernotifications++
+                break;
+            case 'App\\Notifications\\AceptadoNotification':
+                props.auth.usernotifications++
+                break;
+            case 'App\\Notifications\\ObservacionNotification':
+                props.auth.usernotifications++
+                break;
+        }
+    })
+});
 </script>
 
 <template>

@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import DeteccionesForm from "@/Pages/Views/academicos/forms/DeteccionesForm.vue";
-import {ref, computed} from "vue";
+import {ref, computed, onMounted} from "vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import NavLink from "@/Components/NavLink.vue";
 import {Head} from "@inertiajs/vue3";
@@ -10,7 +10,8 @@ import {Head} from "@inertiajs/vue3";
 const props = defineProps({
     deteccion: {
         type: Object
-    }
+    },
+    auth: Object
 });
 
 
@@ -24,6 +25,24 @@ const formatFechaI = computed(() => {
     return new Date(props.deteccion.fecha_I).toLocaleDateString('es-MX');
 });
 // const dialog = ref(true);
+onMounted(() => {
+    window.Echo.private(`App.Models.User.${props.auth.user.id}`).notification((notification) => {
+        switch (notification.type){
+            case 'App\\Notifications\\NewDeteccionNotification':
+                props.auth.usernotifications++
+                break;
+            case 'App\\Notifications\\DeteccionEditadaNotification':
+                props.auth.usernotifications++
+                break;
+            case 'App\\Notifications\\AceptadoNotification':
+                props.auth.usernotifications++
+                break;
+            case 'App\\Notifications\\ObservacionNotification':
+                props.auth.usernotifications++
+                break;
+        }
+    })
+});
 </script>
 
 <template>
@@ -137,15 +156,24 @@ const formatFechaI = computed(() => {
                                     <span>De {{props.deteccion.hora_I}} a {{props.deteccion.hora_F}}</span>
                                 </div>
                                 <div class="flow-root ... pt-5">
+                                    <strong>Horas totales de la actividad o evento: </strong>
+                                    <span>{{props.deteccion.total_horas}}</span>
+                                </div>
+                                <div class="flow-root ... pt-5">
                                     <strong>Objetivo de la actividad o evento: </strong>
                                     <v-divider></v-divider>
                                     <span>{{props.deteccion.objetivoEvento}}</span>
                                 </div>
                                 <template v-if="props.deteccion.obs === 1">
-                                    <div class="flow-root ... pt-5">
+                                    <div class="flow-root ... pt-5 ">
                                         <strong>Observaciones: </strong>
-                                        <v-divider></v-divider>
-                                        <span>{{props.deteccion.observaciones}}</span>
+                                        <v-alert
+                                            border="bottom"
+                                            border-color="warning accent-5"
+                                            elevation="2"
+                                        >
+                                            {{props.deteccion.observaciones}}
+                                        </v-alert>
                                     </div>
                                 </template>
                             </div>

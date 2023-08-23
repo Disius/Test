@@ -38,5 +38,13 @@ class PDFController extends Controller
         $pdf_data = DeteccionNecesidades::with(['carrera', 'deteccion_facilitador', 'jefe', 'departamento'])
             ->where('periodo', '=', $request->input('periodo'))
             ->whereYear('created_at', '=', $request->input('anio'))->get();
+
+        $pdf = app('dompdf.wrapper');
+        $content = $pdf->loadView('pdf.PIFDAP', compact('pdf_data'))
+            ->setPaper('letter', 'landscape')
+            ->output();
+        Storage::disk('local')->put('PIFDAP.pdf', $content);
+
+        return Storage::download('PIFDAP.pdf');
     }
 }

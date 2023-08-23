@@ -2,9 +2,10 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import TablaCursoAcademicoInscritos from "@/Pages/Views/cursos/tablas/TablaCursoAcademicoInscritos.vue";
 import {Head} from "@inertiajs/vue3";
-import {computed} from "vue";
+import {computed, onMounted} from "vue";
 const props = defineProps({
-    curso: Object
+    curso: Object,
+    auth: Object
 });
 
 const formatFechaF = computed(() => {
@@ -15,6 +16,24 @@ const formatFechaF = computed(() => {
 
 const formatFechaI = computed(() => {
     return new Date(props.curso.fecha_I).toLocaleDateString('es-MX');
+});
+onMounted(() => {
+    window.Echo.private(`App.Models.User.${props.auth.user.id}`).notification((notification) => {
+        switch (notification.type){
+            case 'App\\Notifications\\NewDeteccionNotification':
+                props.auth.usernotifications++
+                break;
+            case 'App\\Notifications\\DeteccionEditadaNotification':
+                props.auth.usernotifications++
+                break;
+            case 'App\\Notifications\\AceptadoNotification':
+                props.auth.usernotifications++
+                break;
+            case 'App\\Notifications\\ObservacionNotification':
+                props.auth.usernotifications++
+                break;
+        }
+    })
 });
 </script>
 

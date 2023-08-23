@@ -9,6 +9,7 @@ use App\Models\Docente;
 use App\Models\User;
 use App\Notifications\DeteccionEditadaNotification;
 use App\Notifications\NewDeteccionNotification;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -73,6 +74,8 @@ class CoursesController extends Controller
             'id_departamento' => ['required'],
         ]);
 
+        $totalHoras = $this->total_horas($request->fecha_I, $request->fecha_F, $request->hora_I, $request->hora_F);
+
         $deteccion = DeteccionNecesidades::create([
             'asignaturaFA' => $request->AsignaturasFA,
             'contenidosTM' => $request->ContenidoTFA,
@@ -90,6 +93,7 @@ class CoursesController extends Controller
             'id_jefe' => $request->id_jefe,
             'aceptado' => 0,
             'obs' => 0,
+            'total_horas' => $totalHoras,
             'modalidad' => $request->modalidad,
             'facilitador_externo' =>  $request->facilitador_externo,
             'id_departamento' => $request->id_departamento
@@ -138,6 +142,8 @@ class CoursesController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $totalHoras = $this->total_horas($request->fecha_I, $request->fecha_F, $request->hora_I, $request->hora_F);
+
         $deteccion = DeteccionNecesidades::find($id);
 
         $deteccion->asignaturaFA = $request->AsignaturasFA;
@@ -155,6 +161,7 @@ class CoursesController extends Controller
         $deteccion->carrera_dirigido = $request->dirigido;
         $deteccion->id_jefe = $request->id_jefe;
         $deteccion->modalidad = $request->modalidad;
+        $deteccion->total_horas = $totalHoras;
         $deteccion->deteccion_facilitador()->sync($request->input('facilitadores', []));
 
         $deteccion->save();
@@ -236,5 +243,31 @@ class CoursesController extends Controller
         return Inertia::render('Views/cursos/desarrollo/Desarrollo.Cursos', [
             'cursos' => $cursos,
         ]);
+    }
+
+    public function total_horas($fecha_inicio, $fecha_final, $hora_inicio, $hora_final){
+        $fechaInicio = Carbon::parse($fecha_inicio);
+        $fechaFinal = Carbon::parse($fecha_final);
+        $horaInicio = Carbon::parse($hora_inicio);
+        $horaFinal = Carbon::parse($hora_final);
+
+        $diasHabiles = 0;
+        $horasTotales = 0;
+
+        //bucle para recorrer la fecha inical hasta la fecha final
+        while($fechaInicio <= $fechaFinal){
+            if ($fechaInicio->isWeekday()){
+                $diasHabiles++;
+
+                //aqui calcula las horas del dia en base al horario
+                $horaEnDia = $horaFinal->diffInHours($horaInicio);
+                $horasTotales += $horaEnDia;
+            }
+
+            //de ser falso avanza al siguiente dia
+            $fechaInicio->addDay();
+        }
+
+        return $horasTotales;
     }
 }

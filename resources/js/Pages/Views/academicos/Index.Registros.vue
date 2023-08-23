@@ -5,7 +5,8 @@ import NavLink from "@/Components/NavLink.vue";
 const props = defineProps({
     detecciones: {
         type: Array
-    }
+    },
+    auth: Object,
 })
 </script>
 

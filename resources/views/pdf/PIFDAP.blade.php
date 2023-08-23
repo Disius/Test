@@ -1,83 +1,91 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <style>
-            @page { margin: 3cm 1cm 2cm;}
-            body {
-                /*border: 1px solid #000;*/
-            }
+<html >
+<head>
 
-            .header {
-                position: fixed;
-                top: -2cm;
-                width: 100%;
-                height: 100px;
-                text-align: center;
-                font-weight: bold;
-            }
+    <!-- <title></title> -->
+    <!-- Styles -->
 
-            .header p {
-                margin: 0;
-                font-size: 10pt;
-            }
+    <style>
+        @page { margin: 3cm 1cm 2cm;}
+        body {
+            /*border: 1px solid #000;*/
+        }
 
-            .logo {
-                position: fixed;
-                top: -2cm;
-                left: 0;
-            }
+        .header {
+            position: fixed;
+            top: -2cm;
+            width: 100%;
+            height: 100px;
+            text-align: center;
+            font-weight: bold;
+        }
 
-            .logo img {
-                width: 50px;
-                height: 50px;
-            }
+        .header p {
+            margin: 0;
+            font-size: 10pt;
+        }
 
-            .footer {
-                position: fixed;
-                bottom: -1cm;
-                width: 100%;
-                height: 30px;
-                font-weight: bold;
-            }
+        .logo {
+            position: fixed;
+            top: -2cm;
+            left: 0;
+        }
 
-            .footer p {
-                display: inline-block;
-                font-size: 7pt;
-            }
+        .logo img {
+            width: 50px;
+            height: 50px;
+        }
 
-            .custom_table {
-                /*page-break-inside: auto;*/
-                /*padding-top: 100px;*/
-                /*margin-top: 100px;*/
-                border: 1px solid #000;
-            }
+        .footer {
+            position: fixed;
+            bottom: -1cm;
+            width: 100%;
+            height: 30px;
+            font-weight: bold;
+        }
 
-            .custom_table td,th {
-                border: 1px solid #000;
-            }
+        .footer p {
+            display: inline-block;
+            font-size: 7pt;
+        }
+
+        .custom_table {
+            /*page-break-inside: auto;*/
+            /*padding-top: 100px;*/
+            /*margin-top: 100px;*/
+            border: 1px solid #000;
+        }
+
+        .custom_table td,th {
+            border: 1px solid #000;
+        }
 
 
-            .custom_table th {
-                text-align: center;
-                font-size: 8pt;
-                font-weight: bold;
-                /*white-space: nowrap;*/
-            }
+        .custom_table th {
+            text-align: center;
+            font-size: 8pt;
+            font-weight: bold;
+            /*white-space: nowrap;*/
+        }
 
-            .custom_table tbody {
-                text-align: center;
-                font-size: 8pt;
-            }
+        .custom_table tbody {
+            text-align: center;
+            font-size: 8pt;
+        }
 
-            #firma {
-                page-break-inside: avoid;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="header">
-            <p>PROGRAMA INSTITUCIONAL DE FORMACIÓN DOCENTE</p>
-            <p>INSTITUTO TECNOLÓGICO DE TUXTLA GUTIERREZ</p>
-        </div>
-    </body>
+        #firma {
+            page-break-inside: avoid;
+        }
+
+    </style>
+
+</head>
+
+<body>
+<div class="header">
+    <p>PROGRAMA INSTITUCIONAL DE FORMACIÓN DOCENTE</p>
+    <p>INSTITUTO TECNOLÓGICO DE TUXTLA GUTIERREZ</p>
+
+</div>
+</body>
+
 </html>

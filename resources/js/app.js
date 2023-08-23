@@ -6,8 +6,7 @@ import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 import {vuetify} from "@/plugins/vuetify.js";
-
-
+import {pinia} from "@/store/store.js";
 
 createInertiaApp({
     title: (title) => `${title}`,
@@ -16,6 +15,7 @@ createInertiaApp({
         return createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue, Ziggy)
+            .use(pinia)
             .use(vuetify)
             .mount(el);
     },

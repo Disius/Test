@@ -29,7 +29,7 @@ class NewDeteccionNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['database'];
+        return ['database', 'broadcast'];
     }
 
     /**
@@ -51,10 +51,10 @@ class NewDeteccionNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'email' => $this->detecciones->jefe->email,
+            'email' => $this->detecciones->jefe->usuario->email,
             'id' => $this->detecciones->id,
             'route' => '/coordinacion/detecciones/deteccion',
-            'messegue' => "Se ha creado una nueva deteccion de necesidades"
+            'messegue' => "creo una nueva deteccion de necesidades"
         ];
     }
 }

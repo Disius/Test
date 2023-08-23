@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import DeteccionesForm from "@/Pages/Views/academicos/forms/DeteccionesForm.vue";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 
 const props = defineProps({
     base_docente: {
@@ -12,9 +12,30 @@ const props = defineProps({
     },
     todos_los_departamentos: {
         type: Array
+    },
+    auth: {
+        type: Object
     }
 })
 // const dialog = ref(true);
+onMounted(() => {
+    window.Echo.private(`App.Models.User.${props.auth.user.id}`).notification((notification) => {
+        switch (notification.type){
+            case 'App\\Notifications\\NewDeteccionNotification':
+                props.auth.usernotifications++
+                break;
+            case 'App\\Notifications\\DeteccionEditadaNotification':
+                props.auth.usernotifications++
+                break;
+            case 'App\\Notifications\\AceptadoNotification':
+                props.auth.usernotifications++
+                break;
+            case 'App\\Notifications\\ObservacionNotification':
+                props.auth.usernotifications++
+                break;
+        }
+    })
+});
 </script>
 
 <template>

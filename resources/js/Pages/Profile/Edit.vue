@@ -5,7 +5,7 @@ import UpdatePasswordForm from './Partials/UpdatePasswordForm.vue';
 import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm.vue';
 import {Head, usePage} from '@inertiajs/vue3';
 import DocenteInfo from "@/Pages/Profile/Partials/DocenteInfo.vue";
-import {computed} from "vue";
+import {computed, onMounted} from "vue";
 
 defineProps({
     mustVerifyEmail: {
@@ -29,8 +29,30 @@ defineProps({
     carrera: {
         type: Array,
     },
+    auth: {
+        type: Object
+    }
 });
 const user = computed(() => usePage().props.auth.user);
+
+onMounted(() => {
+    window.Echo.private(`App.Models.User.${props.auth.user.id}`).notification((notification) => {
+        switch (notification.type){
+            case 'App\\Notifications\\NewDeteccionNotification':
+                props.auth.usernotifications++
+                break;
+            case 'App\\Notifications\\DeteccionEditadaNotification':
+                props.auth.usernotifications++
+                break;
+            case 'App\\Notifications\\AceptadoNotification':
+                props.auth.usernotifications++
+                break;
+            case 'App\\Notifications\\ObservacionNotification':
+                props.auth.usernotifications++
+                break;
+        }
+    })
+});
 </script>
 
 <template>

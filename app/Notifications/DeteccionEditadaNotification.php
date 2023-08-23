@@ -29,7 +29,7 @@ class DeteccionEditadaNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['database'];
+        return ['database',  'broadcast'];
     }
 
     /**
@@ -52,9 +52,9 @@ class DeteccionEditadaNotification extends Notification
     {
         return [
             'id' => $this->detecciones->id,
-            'email' => $this->detecciones->jefe_academico->email,
+            'email' => $this->detecciones->jefe->usuario->email,
             'route' => '/coordinacion/detecciones/deteccion',
-            'messegue' => 'Edito la deteccion de necesidades'
+            'messegue' => 'edito la deteccion de necesidades'
         ];
     }
 }
